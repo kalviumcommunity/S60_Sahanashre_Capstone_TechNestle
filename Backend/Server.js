@@ -1,10 +1,16 @@
-const Express = require("express")
-const app = Express()
+const express = require("express")
+const app = express()
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 dotenv.config()
+const cors = require("cors")
+const Router = require("./Routes/Route.js")
 
-const PORT = process.env.PORT
+app.use(express.json())
+app.use(cors())
+app.use("/",Router)
+
+const PORT = process.env.PORT || 8080
 const MONGO_URI = process.env.MONGODB_CONNECTION
 
 app.get("/",(req,res)=>{

@@ -5,11 +5,7 @@ Welcome to TechNestle, your go-to platform for mastering web development skills!
 ![Web development image](https://timesproweb-static-backend-prod.s3.ap-south-1.amazonaws.com/Web_Development_Banner_Image_0e476d1ab6.webp)
 
 ## Features:
-🔐 User Authentication: Sign up and log in securely to access all the features of TechNestle. Choose between two login options:
-
-Developer Login: For those familiar with the basics of web development.
-
-Learner Login: Perfect for newcomers to the field of web development.
+🔐 User Authentication: Sign up and log in securely to access all the features of TechNestle.
 
 👩‍💻 Learn and Teach: Engage in a vibrant community of developers where you can both learn from and teach others. Connect with fellow developers, share knowledge, and grow together.
 
