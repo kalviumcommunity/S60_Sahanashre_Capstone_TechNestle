@@ -1,11 +1,12 @@
 import './App.css'
+import Signup from "./Components/Signup"
 
 function App() {
 
   return (
     <>
-     <p>This is the landing page for TechNestle</p>
-     <p>Welcome!!</p>
+     <Signup/>
+     {/* <h1 className="text-3xl font-bold underline">Welcome to technestle hi!!!!!1</h1> */}
     </>
   )
 }
