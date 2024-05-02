@@ -8,14 +8,14 @@ const Router = require("./Routes/Route.js")
 
 app.use(express.json())
 app.use(cors())
-app.use("/",Router)
+app.use("/api",Router)
 
 const PORT = process.env.PORT || 8080
 const MONGO_URI = process.env.MONGODB_CONNECTION
 
-app.get("/",(req,res)=>{
-    res.send("This is TechNestle")
-})
+// app.get("/",(req,res)=>{
+//     res.send("This is TechNestle")
+// })
 
 mongoose.connect(MONGO_URI)
 .then(()=>{

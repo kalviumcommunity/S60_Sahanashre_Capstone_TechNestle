@@ -1,15 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 
-function Signup() {
+function User() {
   const [user, setUser] = useState({
-    name: "",
     age: 0,
-    email: "",
-    password: "",
     skills: "",
     linkedin: "",
     github: "",
+    profilePhoto: ""
   });
 
   const handleChange = (event) => {
@@ -23,16 +21,15 @@ function Signup() {
   function Submit(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:8080/user", {
+      .post("http://localhost:8080/api/user", {
         name: user.name,
         age: user.age,
-        email: user.email,
-        password: user.password,
         skills: user.skills.split(",").map((skill) => skill.trim()),
         socialMedia: {
           linkedin: user.linkedin,
           github: user.github,
         },
+        profilePhoto: user.profilePhoto
       })
       .then((user) => console.log(user))
       .catch((error) => console.log(error));
@@ -43,40 +40,10 @@ function Signup() {
       <div className="w-full max-w-md rounded-lg shadow-xl p-7">
         <form onSubmit={Submit}>
           <input
-            type="text"
-            id="name"
-            placeholder="Username"
-            value={user.name}
-            className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
-            onChange={handleChange}
-            required
-          ></input>
-          <br />
-          <input
             type="number"
             id="age"
             placeholder="Age"
             value={user.age}
-            className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
-            onChange={handleChange}
-            required
-          />
-          <br />
-          <input
-            type="email"
-            id="email"
-            placeholder="Email"
-            value={user.email}
-            className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
-            onChange={handleChange}
-            required
-          />
-          <br />
-          <input
-            type="password"
-            id="password"
-            placeholder="Password"
-            value={user.password}
             className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
             onChange={handleChange}
             required
@@ -111,8 +78,17 @@ function Signup() {
             onChange={handleChange}
           />
           <br />
+          <input
+            type="text"
+            id="profilePhoto"
+            placeholder="Profile Photo"
+            value={user.profilePhoto}
+            className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
+            onChange={handleChange}
+          />
+          <br />
           <button className="bg-gray-100 rounded-md font-bold p-2 text-blue-600 text-l focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition">
-            Sign Up
+            Add User
           </button>
         </form>
       </div>
@@ -120,4 +96,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default User;

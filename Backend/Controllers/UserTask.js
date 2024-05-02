@@ -1,4 +1,4 @@
-const userModel = require("../Model/User.js");
+const userModel = require("../Model/User");
 
 const user = async (req, res) => {
   try {
@@ -6,9 +6,9 @@ const user = async (req, res) => {
     const savedUser = await newUser.save();
     return res.status(201).json(savedUser);
   } catch (error) {
-    console.log("Error in creating user");
-    return res.status(500).json({"Error in creating user": error.message});
+    console.log("Error in creating user details");
+    return res.status(500).json({"Error in creating user details": error.message});
   }
 };
 
-module.exports = { user };
+module.exports = user;
