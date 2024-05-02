@@ -1,14 +1,18 @@
-import './App.css'
-import Signup from "./Components/Signup"
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
+import Register from './Components/Register';
+import Login from './Components/Login';
+import User from './Components/User';
 
 function App() {
-
   return (
-    <>
-     <Signup/>
-     {/* <h1 className="text-3xl font-bold underline">Welcome to technestle hi!!!!!1</h1> */}
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={<Register />} /> 
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/user" element={<User />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
