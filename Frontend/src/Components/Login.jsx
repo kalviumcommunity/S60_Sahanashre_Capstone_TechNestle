@@ -28,7 +28,7 @@ function Login() {
       })
       .then((response) => {
         if (response.status === 201) {
-          Navigate("/user");
+          Navigate("/createuser");
           console.log(response.data);
         }
       })

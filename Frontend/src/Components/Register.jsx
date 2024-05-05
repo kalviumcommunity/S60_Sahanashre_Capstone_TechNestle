@@ -46,7 +46,7 @@ const Navigate = useNavigate();
             ...user,
             error: ""
           })
-          Navigate("/user")
+          Navigate("/createuser")
         }
     })
     .catch(err => console.log("Error:", err));
