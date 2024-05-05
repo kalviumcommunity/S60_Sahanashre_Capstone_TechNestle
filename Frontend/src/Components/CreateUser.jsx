@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom"
 
-function User() {
+function CreateUser() {
   const [user, setUser] = useState({
     age: 0,
     skills: "",
@@ -18,10 +19,12 @@ function User() {
     });
   };
 
+  const Navigate = useNavigate()
+
   function Submit(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:8080/api/user", {
+      .post("http://localhost:8080/api/createuser", {
         name: user.name,
         age: user.age,
         skills: user.skills.split(",").map((skill) => skill.trim()),
@@ -31,8 +34,15 @@ function User() {
         },
         profilePhoto: user.profilePhoto
       })
-      .then((user) => console.log(user))
-      .catch((error) => console.log(error));
+      .then(response =>{
+        if(response.status === 201){
+            Navigate("/user")
+            console.log(response.data)
+        }
+        else{
+            console.log("Error")
+        }
+      })          
   }
 
   return (
@@ -96,4 +106,4 @@ function User() {
   );
 }
 
-export default User;
+export default CreateUser;
