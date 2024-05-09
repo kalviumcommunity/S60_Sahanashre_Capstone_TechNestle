@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom"
-
+import { getCookie } from "./DisplayUser";
 function CreateUser() {
   const [user, setUser] = useState({
     age: 0,
@@ -20,19 +20,19 @@ function CreateUser() {
   };
 
   const Navigate = useNavigate()
-
   function Submit(event) {
     event.preventDefault();
     axios
       .post("http://localhost:8080/api/createuser", {
-        name: user.name,
+        username:getCookie("username"),
         age: user.age,
         skills: user.skills.split(",").map((skill) => skill.trim()),
         socialMedia: {
           linkedin: user.linkedin,
           github: user.github,
         },
-        profilePhoto: user.profilePhoto
+        profilePhoto: user.profilePhoto,
+        
       })
       .then(response =>{
         if(response.status === 201){

@@ -46,6 +46,7 @@ const Navigate = useNavigate();
             ...user,
             error: ""
           })
+          document.cookie = `username=${user.username}`;
           Navigate("/createuser")
         }
     })
