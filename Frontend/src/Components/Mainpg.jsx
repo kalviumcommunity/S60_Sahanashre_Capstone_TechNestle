@@ -1,8 +1,30 @@
 import { useNavigate } from "react-router-dom";
-import techlogo from "../assets/schoolbg.png";
+// import techlogo from "../assets/schoolbg.png";
+import nest1 from "../assets/nest1.png"
+import nest2 from "../assets/nest2.png"
+import nest3 from "../assets/nest3.png"
+import nest4 from "../assets/nest4.png"
+import { useEffect, useState } from "react";
 
 function Mainpg() {
   const navigate = useNavigate();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const images = [
+    nest1,
+    nest2,
+    nest3,
+    nest4
+  ];
+
+  useEffect(() => {
+    const intervalId = setTimeout(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 2000); 
+
+    return () => {
+      clearTimeout(intervalId);
+    };
+  }, [currentIndex, images.length]);
   return (
     <div className="">
       <br />
@@ -15,16 +37,17 @@ function Mainpg() {
       <div className="flex justify-center items-center">
         <p>Your gateway to Skill Mastery</p>
       </div>
-      <br />
-      <br />
       <div className="flex items-center justify-center">
-        <div className=" h-3/5 w-full flex items-center justify-evenly">
-          <img src={techlogo} alt="" className="size-1/2" />
-        </div>
+        <div className="flex w-[60%] h-[470px] p-10 items-center justify-center">
+         <img
+        src={images[currentIndex]}
+        alt={`Image ${currentIndex + 1}`}
+        className="w-7/12 h-5/6"
+      />
       </div>
-      <div>
-        <div className="flex justify-end w-11/12 items-center">
-          <button
+      </div>
+      <div className="flex items-center justify-center">
+      <button
             className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-sky-500 group px-8 py-2"
             onClick={() => {
               navigate(`/register`);
@@ -36,32 +59,9 @@ function Mainpg() {
             <span className="absolute w-full h-full bg-sky-500 -left-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
             <span className="absolute w-full h-full bg-sky-500 -right-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>
           </button>
-        </div>
       </div>
     </div>
   );
 }
 
 export default Mainpg;
-
-{
-  /* <div className="flex justify-center space-x-8 mt-8">
-  <Link to="/register">
-    <button className="bg-gray-100 rounded-md font-bold p-2 text-blue-600 text-l focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition">
-      Register
-    </button>
-  </Link>
-  <Link to="/login">
-    <button className="bg-gray-100 rounded-md font-bold p-2 text-blue-600 text-l focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition">
-      Login
-    </button>
-  </Link>
-</div>
-<p>Welcome to TechNestle✨</p>
-<p>Your Gateway to Web Development Mastery!</p>
-<p>Learn, Connect, Grow</p>
-<p>
-  TechNestle is your ultimate destination for mastering web development
-  skills, catering to both seasoned developers and enthusiastic beginners.
-</p> */
-}
