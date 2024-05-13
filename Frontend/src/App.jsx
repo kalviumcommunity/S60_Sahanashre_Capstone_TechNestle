@@ -4,6 +4,7 @@ import Register from './Components/Register';
 import Login from './Components/Login';
 import CreateUser from './Components/CreateUser';
 import DisplayUser from './Components/DisplayUser';
+import About from './Components/About';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/createuser" element={<CreateUser />} />
         <Route exact path="/user" element={<DisplayUser/>}/>
+        <Route exact path="/about" element={<About/>}/>
       </Routes>
     </BrowserRouter>
   );
