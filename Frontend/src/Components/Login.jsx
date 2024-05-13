@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Login() {
@@ -9,7 +9,7 @@ function Login() {
     error: "",
   });
 
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -19,7 +19,7 @@ function Login() {
     });
   };
 
-  const Submit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .post("http://localhost:8080/api/login", {
@@ -28,7 +28,8 @@ function Login() {
       })
       .then((response) => {
         if (response.status === 201) {
-          Navigate("/createuser");
+          // Redirect user after successful login
+          navigate("/createuser");
           console.log(response.data);
         }
       })
@@ -36,42 +37,52 @@ function Login() {
         console.log("Error in login", error);
         setLogin({
           ...login,
-          error: "User details does'nt match. So unable to login..",
+          error: "User details don't match, unable to login.",
         });
       });
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-center">
-      <div className="w-full max-w-md rounded-lg shadow-xl p-7">
-        <form onSubmit={Submit}>
-          <div>
+    <div className="flex items-center justify-center h-screen dark">
+      <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-6">
+        <form onSubmit={handleSubmit} className="flex flex-col items-center">
+          <div className="mb-4">
             <input
               type="email"
               id="email"
               placeholder="Email"
               value={login.email}
               onChange={handleChange}
-              className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
+              className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               required
             />
           </div>
-          <div>
+          <div className="mb-4">
             <input
               type="password"
               id="password"
               placeholder="Password"
               value={login.password}
               onChange={handleChange}
-              className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
+              className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
               required
+              autoComplete="current-password"
             />
           </div>
-          <button className="bg-gray-100 rounded-md font-bold p-2 text-blue-600 text-l focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition">
+          <p className="text-white mt-4">
+            Don't have an account?{" "}
+            <Link to="/register" className="text-blue-500 hover:underline ml-1">
+              Sign Up
+            </Link>
+          </p>
+          <button
+            type="submit"
+            className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150"
+          >
             Login
           </button>
         </form>
-        <p>{login.error && login.error}</p>
+        {login.error && <p className="text-red-500 mt-2">{login.error}</p>}
       </div>
     </div>
   );
