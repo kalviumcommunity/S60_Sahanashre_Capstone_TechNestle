@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom"
-import { getCookie } from "./DisplayUser";
 function CreateUser() {
   const [user, setUser] = useState({
     age: 0,
@@ -10,6 +9,17 @@ function CreateUser() {
     github: "",
     profilePhoto: ""
   });
+
+  const getCookie = (name) => {
+    const cookies = document.cookie.split('; ');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].split('=');
+      if (cookie[0] === name) {
+        return cookie[1];
+      }
+    }
+    return null;
+  };
 
   const handleChange = (event) => {
     const { id, value } = event.target;

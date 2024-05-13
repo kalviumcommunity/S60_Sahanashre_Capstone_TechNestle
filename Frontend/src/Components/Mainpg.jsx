@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-// import techlogo from "../assets/schoolbg.png";
+import techlogo from "../assets/schoolbg.png";
 import nest1 from "../assets/nest1.png"
 import nest2 from "../assets/nest2.png"
 import nest3 from "../assets/nest3.png"
@@ -32,6 +32,7 @@ function Mainpg() {
       <Navbar/>
       <div>
         <div className="flex items-center justify-center mt-8">
+        <img src={techlogo} alt="TechLogo" className="h-14"/>
           <h1 className="font-bold text-5xl">Tech Nestle</h1>
         </div>
       </div>
@@ -52,7 +53,7 @@ function Mainpg() {
       <button
             className="cursor-pointer font-semibold overflow-hidden relative z-100 border border-sky-500 group px-8 py-2"
             onClick={() => {
-              navigate(`/register`);
+              navigate(`/login`);
             }}
           >
             <span className="relative z-10 text-sky-500 group-hover:text-white text-xl duration-500">
