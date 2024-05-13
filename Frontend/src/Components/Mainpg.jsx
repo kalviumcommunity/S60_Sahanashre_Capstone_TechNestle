@@ -5,6 +5,7 @@ import nest2 from "../assets/nest2.png"
 import nest3 from "../assets/nest3.png"
 import nest4 from "../assets/nest4.png"
 import { useEffect, useState } from "react";
+import Navbar from "./Navbar";
 
 function Mainpg() {
   const navigate = useNavigate();
@@ -26,10 +27,11 @@ function Mainpg() {
     };
   }, [currentIndex, images.length]);
   return (
-    <div className="">
+    <div>
       <br />
-      <div className="">
-        <div className="flex items-center justify-center">
+      <Navbar/>
+      <div>
+        <div className="flex items-center justify-center mt-8">
           <h1 className="font-bold text-5xl">Tech Nestle</h1>
         </div>
       </div>
