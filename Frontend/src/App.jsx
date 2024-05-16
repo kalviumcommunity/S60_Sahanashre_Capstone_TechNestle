@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Mainpg from './Components/Mainpg';
 import Register from './Components/Register';
 import Login from './Components/Login';
-import CreateUser from './Components/CreateUser';
-import DisplayUser from './Components/DisplayUser';
+import CreateUser from './Components/Profile';
+import DisplayUser from './Components/DisplayUsers';
 import About from './Components/About';
 
 function App() {

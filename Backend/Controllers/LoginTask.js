@@ -17,7 +17,6 @@ const login = async (req, res) => {
             res.status(400).json({ message: "Details given by the user did not match" });
         }
     } catch (error) {
-        console.error(error);
         res.status(500).json({ message: "Internal server error" });
     }
 };
