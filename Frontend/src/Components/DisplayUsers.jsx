@@ -7,7 +7,6 @@ function DisplayUser(){
         const fetchUsers = async()=>{
             try{
                 const userFetched = await axios.get("http://localhost:8080/api/user")
-                console.log(userFetched.data)
                 setUsers(userFetched.data)
             }
             catch(error){
@@ -19,7 +18,7 @@ function DisplayUser(){
 
     return(
         <div>
-            
+            <div> 
             {
                 users.map((user,id)=>(
                     <div key={id}>
@@ -33,6 +32,7 @@ function DisplayUser(){
                 ))
             }
         </div>
+        </div>      
     )
 }
 
