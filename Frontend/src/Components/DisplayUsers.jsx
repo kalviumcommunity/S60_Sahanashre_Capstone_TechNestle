@@ -25,7 +25,7 @@ function DisplayUser() {
             <img
               className="w-36 h-36 rounded-full object-cover"
               src={user.profilePhoto}
-              alt={`${user.username}'s Profile Photo`}
+              alt={"Profile Photo"}
             />
             <div className="ml-4">
               <p className="font-bold text-lg text-gray-900">{user.username}</p>
