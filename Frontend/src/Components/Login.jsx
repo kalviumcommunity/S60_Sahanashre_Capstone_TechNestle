@@ -28,8 +28,7 @@ function Login() {
       })
       .then((response) => {
         if (response.status === 201) {
-          // Redirect user after successful login
-          navigate("/createuser");
+          navigate("/user");
           console.log(response.data);
         }
       })

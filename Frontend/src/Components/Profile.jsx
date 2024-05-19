@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CreateUser() {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     age: 0,
     skills: "",
@@ -27,15 +27,18 @@ function CreateUser() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append("file", profilePhoto);
-      formData.append("upload_preset", "lfv0xwf1");
+      let photoUrl = "";
+      if (profilePhoto) {
+        const formData = new FormData();
+        formData.append("file", profilePhoto);
+        formData.append("upload_preset", "lfv0xwf1");
 
-      const photoResponse = await axios.post(
-        "https://api.cloudinary.com/v1_1/deilbvy6o/image/upload",
-        formData
-      );
-
+        const photoResponse = await axios.post(
+          "https://api.cloudinary.com/v1_1/deilbvy6o/image/upload",
+          formData
+        );
+        photoUrl = photoResponse.data.secure_url;
+      }
       const userResponse = await axios.post("http://localhost:8080/api/createuser", {
         username: getCookie("username"),
         age: user.age,
@@ -44,16 +47,18 @@ function CreateUser() {
           linkedin: user.linkedin,
           github: user.github,
         },
-        profilePhoto: photoResponse.data.secure_url,
+        profilePhoto: photoUrl,
       });
 
       if (userResponse.status === 201) {
         console.log(userResponse.data);
-        Navigate("/user")
-      } else {
+        navigate("/user");
+      } 
+      else {
         console.log("Error creating user");
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error creating user:", error);
     }
   };
