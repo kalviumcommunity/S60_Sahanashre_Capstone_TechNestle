@@ -28,6 +28,9 @@ function Login() {
       })
       .then((response) => {
         if (response.status === 201) {
+          console.log(response.data)
+          document.cookie="username="+response.data._doc.username
+          document.cookie="photo="+response.data.photo
           navigate("/user");
           console.log(response.data);
         }

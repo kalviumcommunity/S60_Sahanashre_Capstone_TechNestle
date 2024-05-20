@@ -3,7 +3,7 @@ const userModel = require("../Model/User");
 const updateUser = async (req, res) => {
     const { id } = req.params;
     try {
-        const update = await userModel.findByIdAndUpdate(id, req.body, { new: true });
+        const update = await userModel.findByIdAndUpdate(id, req.body);
         if (!update) {
             return res.status(404).send("User not found");
         }

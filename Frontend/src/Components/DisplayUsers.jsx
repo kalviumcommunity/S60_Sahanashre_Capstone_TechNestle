@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
+import Navbar from "./Navbar.jsx"
 
 function DisplayUser() {
   const [users, setUsers] = useState([]);
@@ -18,7 +19,8 @@ function DisplayUser() {
   }, []);
 
   return (
-    <div className="container mx-auto p-7 m-7 bg-gray-100 rounded-xl">
+    <div className="container mx-auto p-7 mt-24 bg-gray-100 rounded-xl">
+          <Navbar/>
       <div className="grid grid-cols-3 gap-6">
         {users.map((user, id) => (
           <div key={id} className="bg-white p-6 rounded-lg shadow-xl flex items-center">
