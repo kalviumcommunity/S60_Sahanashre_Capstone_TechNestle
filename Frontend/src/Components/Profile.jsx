@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function CreateUser() {
   const navigate = useNavigate();
   const [user, setUser] = useState({
+    email: "",
     age: 0,
     skills: "",
     linkedin: "",
@@ -51,7 +52,8 @@ function CreateUser() {
       });
 
       if (userResponse.status === 201) {
-        console.log(userResponse.data);
+        // console.log(userResponse.data);
+        document.cookie=`photo=${photoUrl}`
         navigate("/user");
       } 
       else {

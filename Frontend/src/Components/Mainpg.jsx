@@ -31,7 +31,7 @@ function Mainpg() {
       <br />
       <Navbar/>
       <div>
-        <div className="flex items-center justify-center mt-8">
+        <div className="flex items-center justify-center mt-14">
         <img src={techlogo} alt="TechLogo" className="h-14"/>
           <h1 className="font-bold text-5xl">Tech Nestle</h1>
         </div>
