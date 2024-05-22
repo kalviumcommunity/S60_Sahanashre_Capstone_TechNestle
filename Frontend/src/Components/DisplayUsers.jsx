@@ -11,7 +11,8 @@ function DisplayUser() {
       try {
         const userFetched = await axios.get("http://localhost:8080/api/user");
         setUsers(userFetched.data);
-      } catch (error) {
+      } 
+      catch (error) {
         console.log("Error in fetching user details", error.message);
       }
     };
