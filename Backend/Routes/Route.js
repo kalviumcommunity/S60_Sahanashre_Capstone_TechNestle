@@ -11,7 +11,7 @@ Router.post("/register",register)
 Router.post("/createuser",createUser)
 Router.post("/login",login)
 Router.get("/user",displayUser)
-Router.put("/updateuser/:id",updateUser)
+Router.put("/updateuser/:profilename",updateUser)
 Router.delete("/deleteuser/:id",deleteUser)
 
 module.exports = Router

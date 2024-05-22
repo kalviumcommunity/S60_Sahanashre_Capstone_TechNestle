@@ -5,6 +5,7 @@ import Login from './Components/Login';
 import CreateUser from './Components/Profile';
 import DisplayUser from './Components/DisplayUsers';
 import About from './Components/About';
+import UpdateProfile from './Components/UpdateProfile';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/createuser" element={<CreateUser />} />
         <Route exact path="/user" element={<DisplayUser/>}/>
         <Route exact path="/about" element={<About/>}/>
+        <Route exact path="/updateprofile/:profilename" element={<UpdateProfile/>}/>
       </Routes>
     </BrowserRouter>
   );
