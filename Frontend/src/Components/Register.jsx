@@ -20,44 +20,66 @@ function Signup() {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    axios
-      .post("http://localhost:8080/api/register", {
+    try {
+      const res = await axios.post("http://localhost:8080/api/register", {
         username: user.username,
         email: user.email,
         password: user.password,
-      })
-      .then((res) => {
-        if (res.data.message === "User with this email already exist") {
-          setUser({
-            ...user,
-            error: "User with this email already exists",
-          });
-        } else if (
-          res.data.message === "Username already exists. Give some other name.."
-        ) {
-          setUser({
-            ...user,
-            error: "Username already exists. Give some other name..",
-          });
-        } else if (res.status === 201) {
-          setUser({
-            ...user,
-            error: "",
-          });
-          document.cookie = `username=${user.username}`;
-          navigate("/createuser");
+      });
+
+      if (res.data && res.data.message) {
+        let errorMessage = "";
+        switch (res.data.message) {
+          case "User with this email already exists":
+            errorMessage = "An account with this email already exists. Please use a different email.";
+            break;
+          case "Username already exists. Please choose another.":
+            errorMessage = "This username is already taken. Please choose a different username.";
+            break;
+          default:
+            errorMessage = "An unexpected error occurred. Please try again.";
         }
-      })
-      .catch((err) => console.log("Error:", err));
+        setUser({
+          ...user,
+          error: errorMessage,
+        });
+      }
+       else if (res.status === 201) {
+        setUser({
+          ...user,
+          error: "",
+        });
+        document.cookie = `username=${user.username}`;
+        navigate("/createuser");
+      }
+       else {
+        setUser({
+          ...user,
+          error: "An unexpected error occurred. Please try again.",
+        });
+      }
+    } 
+    
+    catch (err) {
+      let errorMessage = "An unexpected error occurred. Please try again.";
+      if (err.response && err.response.data && err.response.data.message) {
+        errorMessage = err.response.data.message;
+      }
+
+      setUser({
+        ...user,
+        error: errorMessage,
+      });
+    }
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen dark">
       <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-6">
         <h2 className="text-2xl font-bold text-gray-200 mb-4">Signup Form</h2>
-        <form className="flex flex-col">
+        <form className="flex flex-col" onSubmit={handleSubmit}>
           <input
             id="username"
             placeholder="Username"
@@ -85,12 +107,11 @@ function Signup() {
           <button
             className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150"
             type="submit"
-            onClick={handleSubmit}
           >
             Sign Up
           </button>
         </form>
-        {user.error && <p className="text-red-500">{user.error}</p>}
+        {user.error && <p className="text-red-500 mt-2">{user.error}</p>}
       </div>
     </div>
   );
