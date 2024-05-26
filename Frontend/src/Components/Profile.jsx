@@ -13,6 +13,17 @@ function CreateUser() {
   });
   const [profilePhoto, setProfilePhoto] = useState(""); 
 
+  const getCookie = (name) => {
+    const cookies = document.cookie.split("; ");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].split("=");
+      if (cookie[0] === name) {
+        return cookie[1];
+      }
+    }
+    return null;
+  };
+
   const handleChange = (event) => {
     const { id, value } = event.target;
     setUser({
@@ -24,6 +35,7 @@ function CreateUser() {
   const handlePhotoChange = (event) => {
     setProfilePhoto(event.target.files[0]);
   };
+  const token = getCookie("access_token")
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -49,7 +61,13 @@ function CreateUser() {
           github: user.github,
         },
         profilePhoto: photoUrl,
-      });
+      },
+    {
+      headers:{
+        Authorization : `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
 
       if (userResponse.status === 201) {
         // console.log(userResponse.data);
@@ -63,17 +81,6 @@ function CreateUser() {
     catch (error) {
       console.error("Error creating user:", error);
     }
-  };
-
-  const getCookie = (name) => {
-    const cookies = document.cookie.split("; ");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].split("=");
-      if (cookie[0] === name) {
-        return cookie[1];
-      }
-    }
-    return null;
   };
 
   return (

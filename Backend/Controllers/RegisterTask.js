@@ -1,5 +1,7 @@
 const registerModel = require("../Model/Register");
 const joiSchema = require("../JoiSchema"); 
+const jwt = require("jsonwebtoken")
+const env = require("dotenv").config()
 
 const register = async (req, res) => {
   // Joi validation
@@ -11,6 +13,7 @@ const register = async (req, res) => {
   try{
     const emailExists = await registerModel.exists({ email: req.body.email });
     const usernameExists = await registerModel.exists({ username: req.body.username });
+    const {username} = req.body
     
     if(emailExists){
       return res.status(400).json({ message: "User with this email already exists" });
@@ -19,9 +22,11 @@ const register = async (req, res) => {
       return res.status(400).json({ message: "Username already exists. Please choose another." });
     } 
     else{
+      const accessToken = jwt.sign(username,process.env.SECRET_KEY)
+      console.log(accessToken)
       const newRegister = new registerModel(req.body);
       const savedRegister = await newRegister.save();
-      return res.status(201).json(savedRegister);
+      return res.status(201).json(accessToken);
     }
   } 
   catch(error){
