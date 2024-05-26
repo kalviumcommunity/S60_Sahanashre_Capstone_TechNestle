@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const registerModel = require("../Model/Register");
 const userModel=require("../Model/User")
+const jwt = require("jsonwebtoken")
+const env = require("dotenv").config()
 const login = async (req, res) => {
     const { email, password } = req.body;
   
@@ -14,7 +16,8 @@ const login = async (req, res) => {
         
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (passwordMatch) {
-            res.status(201).json({ ...user,photo:photo.profilePhoto,message: "Login successful" });
+            const token = jwt.sign(email,process.env.SECRET_KEY)
+            res.status(201).json({ token,...user,photo:photo.profilePhoto,message: "Login successful" });
         } 
         else {
             res.status(400).json({ message: "Details given by the user did not match" });
