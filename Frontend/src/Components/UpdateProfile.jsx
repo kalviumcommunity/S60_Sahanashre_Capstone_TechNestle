@@ -15,6 +15,17 @@ function UpdateProfile() {
   });
   const [profilePhoto, setProfilePhoto] = useState("");
 
+  const getCookie = (name) => {
+    const cookies = document.cookie.split("; ");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].split("=");
+      if (cookie[0] === name) {
+        return cookie[1];
+      }
+    }
+    return null;
+  };
+
   const handleChange = (event) => {
     const { id, value } = event.target;
     setUser({
@@ -44,6 +55,7 @@ function UpdateProfile() {
         photoUrl = photoResponse.data.secure_url;
         document.cookie = `photo=${photoUrl}`; 
       }
+      const token = getCookie("access_token")
 
       const userResponse = await axios.put(`http://localhost:8080/api/updateuser/${profilename}`, {
         username: username,
@@ -54,6 +66,13 @@ function UpdateProfile() {
           github: user.github,
         },
         profilePhoto: photoUrl,
+      },
+      {
+        headers:
+        {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"    
+        }
       });
 
       if (userResponse.status === 200) {
@@ -65,17 +84,6 @@ function UpdateProfile() {
     } catch (error) {
       console.error("Error updating user:", error);
     }
-  };
-
-  const getCookie = (name) => {
-    const cookies = document.cookie.split("; ");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].split("=");
-      if (cookie[0] === name) {
-        return cookie[1];
-      }
-    }
-    return null;
   };
 
   return (
