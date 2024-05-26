@@ -15,10 +15,12 @@ const login = async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (passwordMatch) {
             res.status(201).json({ ...user,photo:photo.profilePhoto,message: "Login successful" });
-        } else {
+        } 
+        else {
             res.status(400).json({ message: "Details given by the user did not match" });
         }
-    } catch (error) {
+    } 
+    catch (error) {
         console.log(error)
         res.status(500).json({ message: "Internal server error"+error });
     }

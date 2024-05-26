@@ -5,7 +5,8 @@ const user = async (req, res) => {
     const newUser = new userModel(req.body);
     const savedUser = await newUser.save();
     return res.status(201).json(savedUser);
-  } catch (error) {
+  } 
+  catch (error) {
     console.log("Error in creating user details");
     return res.status(500).json({"Error in creating user details": error.message});
   }

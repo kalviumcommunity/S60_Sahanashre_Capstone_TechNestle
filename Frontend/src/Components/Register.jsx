@@ -28,6 +28,7 @@ function Signup() {
         email: user.email,
         password: user.password,
       });
+      console.log(res.data)
 
       if (res.data && res.data.message) {
         let errorMessage = "";
@@ -52,6 +53,7 @@ function Signup() {
           error: "",
         });
         document.cookie = `username=${user.username}`;
+        document.cookie = `access_token=${res.data}`
         navigate("/createuser");
       }
        else {
