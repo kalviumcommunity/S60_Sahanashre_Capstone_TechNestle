@@ -1,4 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import defaultProfile from "../assets/nest4.png"
 
 function Navbar() {
   const getCookie = (name) => {
@@ -25,14 +26,17 @@ function Navbar() {
         {photoUrl ? (
           <img
             src={photoUrl}
-            onClick={() => navigate(`/updateprofile/${getCookie("username")}`)}
+            onClick={() => navigate(`/updateprofile/${username}`)}
             alt={username}
             className="h-12 w-12 rounded-full cursor-pointer"
           />
         ) : (
-          <div className="h-12 w-12 rounded-full bg-gray-300 flex items-center justify-center">
-            <span className="text-white">{username ? username[0].toUpperCase() : "U"}</span>
-          </div>
+          <img
+            src={defaultProfile}
+            alt="Default Profile"
+            onClick={()=> navigate(`/updateprofile/${username}`)}
+            className="h-12 w-12 rounded-full cursor-pointer"
+          />
         )}
       </nav>
     </div>

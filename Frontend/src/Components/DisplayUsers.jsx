@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import Navbar from "./Navbar.jsx";
+import defaultProfile from "../assets/nest4.png"
 
 function DisplayUser() {
   const [users, setUsers] = useState([]);
@@ -53,7 +54,7 @@ function DisplayUser() {
           <div key={id} className="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center">
             <img
               className="w-36 h-36 rounded-full object-cover"
-              src={user.profilePhoto}
+              src={user.profilePhoto || defaultProfile}
               alt={"Profile Photo"}
             />
             <div className="mt-4 text-center">

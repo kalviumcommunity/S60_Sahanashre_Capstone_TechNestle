@@ -1,11 +1,10 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 function UpdateProfile() {
   const navigate = useNavigate();
   const { profilename } = useParams();
-  console.log(profilename)
   const [user, setUser] = useState({
     email: "",
     age: 0,
@@ -26,6 +25,34 @@ function UpdateProfile() {
     return null;
   };
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = getCookie("access_token");
+        const response = await axios.get(`http://localhost:8080/api/user/${profilename}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+        const userData = response.data;
+        console.log(userData)
+        setUser({
+          email: userData.email || "",
+          age: userData.age || 0,
+          skills: userData.skills ? userData.skills.join(", ") : "",
+          linkedin: userData.socialMedia.linkedin || "",
+          github: userData.socialMedia.github || "",
+        });
+      }
+       catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [profilename]);
+
   const handleChange = (event) => {
     const { id, value } = event.target;
     setUser({
@@ -42,7 +69,7 @@ function UpdateProfile() {
     event.preventDefault();
     const username = getCookie("username");
     try {
-      let photoUrl = getCookie("photo"); 
+      let photoUrl = getCookie("photo");
       if (profilePhoto) {
         const formData = new FormData();
         formData.append("file", profilePhoto);
@@ -53,27 +80,29 @@ function UpdateProfile() {
           formData
         );
         photoUrl = photoResponse.data.secure_url;
-        document.cookie = `photo=${photoUrl}`; 
+        document.cookie = `photo=${photoUrl}`;
       }
-      const token = getCookie("access_token")
+      const token = getCookie("access_token");
 
-      const userResponse = await axios.put(`http://localhost:8080/api/updateuser/${profilename}`, {
-        username: username,
-        age: user.age,
-        skills: user.skills.split(",").map((skill) => skill.trim()),
-        socialMedia: {
-          linkedin: user.linkedin,
-          github: user.github,
-        },
-        profilePhoto: photoUrl,
-      },
-      {
-        headers:
+      const userResponse = await axios.put(
+        `http://localhost:8080/api/updateuser/${profilename}`,
         {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"    
+          username: username,
+          age: user.age,
+          skills: user.skills.split(",").map((skill) => skill.trim()),
+          socialMedia: {
+            linkedin: user.linkedin,
+            github: user.github,
+          },
+          profilePhoto: photoUrl,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
       if (userResponse.status === 200) {
         navigate("/user");
@@ -81,7 +110,8 @@ function UpdateProfile() {
       else {
         console.log("Error updating user");
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error updating user:", error);
     }
   };
