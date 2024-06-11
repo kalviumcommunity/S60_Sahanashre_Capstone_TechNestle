@@ -6,10 +6,11 @@ require("dotenv").config();
 const register = require("../Controllers/RegisterTask.js");
 const createUser = require("../Controllers/Profile.js");
 const login = require("../Controllers/LoginTask.js");
-const displayUser = require("../Controllers/DisplayUsers.js");
+const displayUsers = require("../Controllers/DisplayUsers.js");
 const updateUser = require("../Controllers/UpdateProfile.js");
 const deleteUser = require("../Controllers/DeleteProfile.js");
 const sendMail = require("../Controllers/SendMail.js");
+const displayUser = require("../Controllers/DisplayUser.js")
 
 const AuthenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
@@ -31,9 +32,10 @@ const AuthenticateToken = (req, res, next) => {
 Router.post("/register", register);
 Router.post("/createuser", AuthenticateToken, createUser);
 Router.post("/login", login);
-Router.get("/user", displayUser);
+Router.get("/user", displayUsers);
 Router.put("/updateuser/:profilename", AuthenticateToken, updateUser);
 Router.delete("/deleteuser/:id", deleteUser);
 Router.post("/email", sendMail);
+Router.get("/user/:profilename",AuthenticateToken,displayUser)
 
 module.exports = Router;
