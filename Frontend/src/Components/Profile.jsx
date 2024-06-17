@@ -6,12 +6,12 @@ function CreateUser() {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
-    age: 0,
+    age: "",
     skills: "",
     linkedin: "",
     github: "",
   });
-  const [profilePhoto, setProfilePhoto] = useState(""); 
+  const [profilePhoto, setProfilePhoto] = useState(null);
 
   const getCookie = (name) => {
     const cookies = document.cookie.split("; ");
@@ -35,7 +35,8 @@ function CreateUser() {
   const handlePhotoChange = (event) => {
     setProfilePhoto(event.target.files[0]);
   };
-  const token = getCookie("access_token")
+
+  const token = getCookie("access_token");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -52,33 +53,33 @@ function CreateUser() {
         );
         photoUrl = photoResponse.data.secure_url;
       }
-      const userResponse = await axios.post("http://localhost:8080/api/createuser", {
-        username: getCookie("username"),
-        age: user.age,
-        skills: user.skills.split(",").map((skill) => skill.trim()),
-        socialMedia: {
-          linkedin: user.linkedin,
-          github: user.github,
+      const userResponse = await axios.post(
+        "http://localhost:8080/api/createuser",
+        {
+          username: getCookie("username"),
+          age: user.age,
+          skills: user.skills.split(",").map((skill) => skill.trim()),
+          socialMedia: {
+            linkedin: user.linkedin,
+            github: user.github,
+          },
+          profilePhoto: photoUrl,
         },
-        profilePhoto: photoUrl,
-      },
-    {
-      headers:{
-        Authorization : `Bearer ${token}`,
-        "Content-Type": "application/json"
-      }
-    });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (userResponse.status === 201) {
-        // console.log(userResponse.data);
-        document.cookie=`photo=${photoUrl}`
+        document.cookie = `photo=${photoUrl}`;
         navigate("/user");
-      } 
-      else {
+      } else {
         console.log("Error creating user");
       }
-    } 
-    catch (error) {
+    } catch (error) {
       console.error("Error creating user:", error);
     }
   };
@@ -124,13 +125,22 @@ function CreateUser() {
             onChange={handleChange}
           />
           <br />
-          <input
-            type="file"
-            id="profilePhoto"
-            placeholder="Profile Photo"
-            className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
-            onChange={handlePhotoChange}
-          />
+          <div className="flex items-center justify-center mb-4">
+            <label className="bg-gray-100 text-gray-900 rounded-md p-2 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition cursor-pointer">
+              <span>Profile Photo</span>
+              <input
+                type="file"
+                id="profilePhoto"
+                className="hidden"
+                onChange={handlePhotoChange}
+              />
+            </label>
+            {profilePhoto && (
+              <span className="ml-2 text-gray-500 text-sm">
+                {profilePhoto.name}
+              </span>
+            )}
+          </div>
           <br />
           <button className="bg-gray-100 rounded-md font-bold p-2 text-blue-600 text-l focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition">
             Add User

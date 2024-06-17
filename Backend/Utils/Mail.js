@@ -19,22 +19,8 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-function sendMail(from, to, subject, text) {
-    const mailData = {
-        from: from,
-        to: to,
-        subject: subject,
-        text: text
-    };
-
-    transporter.sendMail(mailData, function (err, info) {
-        if (err) {
-            console.log(err);
-        } 
-        else {
-            console.log(info);
-        }
-    });
+async function sendMail(mailData) {
+    return await transporter.sendMail(mailData);
 }
 
 module.exports = sendMail;
