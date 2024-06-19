@@ -10,7 +10,10 @@ const displayUsers = require("../Controllers/DisplayUsers.js");
 const updateUser = require("../Controllers/UpdateProfile.js");
 const deleteUser = require("../Controllers/DeleteProfile.js");
 const sendMail = require("../Controllers/SendMail.js");
-const displayUser = require("../Controllers/DisplayUser.js")
+const displayUser = require("../Controllers/DisplayUser.js");
+const IncomingRequest = require("../Controllers/IncomingRequest.js");
+const OutgoingRequest = require("../Controllers/OutgoingRequest.js");
+const UpdateRequestStatus = require("../Controllers/UpdateRequestStatus.js")
 
 const AuthenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
@@ -36,6 +39,9 @@ Router.get("/user", displayUsers);
 Router.put("/updateuser/:profilename", AuthenticateToken, updateUser);
 Router.delete("/deleteuser/:id", deleteUser);
 Router.post("/email", sendMail);
-Router.get("/user/:profilename",AuthenticateToken,displayUser)
+Router.get("/user/:profilename", AuthenticateToken, displayUser);
+Router.get("/incoming/:profilename", AuthenticateToken, IncomingRequest);
+Router.get("/outgoing/:profilename", AuthenticateToken, OutgoingRequest);
+Router.put('/requests/:id', AuthenticateToken, UpdateRequestStatus);
 
 module.exports = Router;

@@ -9,7 +9,6 @@ const login = async (req, res) => {
     try {
         const user = await registerModel.findOne({ email });
         const photo = await userModel.findOne({username:user.username})
-        console.log(photo)
         if (!user) {
             return res.status(400).json({ message: "User doesn't exist. Kindly register" });
         }

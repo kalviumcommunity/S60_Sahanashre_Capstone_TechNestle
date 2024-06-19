@@ -15,8 +15,8 @@ const Mail = async (req, res) => {
         const toEmail = user.email;
 
         const requestDetail = new RequestDetail({
-            from,
-            to: toEmail, 
+            from: from,
+            to: to, 
             subject,
             mailBody: text,
             skills: []
@@ -24,11 +24,12 @@ const Mail = async (req, res) => {
 
         await requestDetail.save();
 
-        await sendMail({from, to:toEmail, subject, text});
+        await sendMail({from:"sahusasdi@gmail.com", to:toEmail, subject, text});
         
         return res.status(200).json({ message: 'Request sent successfully' });
 
-    } catch (err) {
+    }
+    catch (err) {
         return res.status(500).json({ error: err.message });
     }
 };
