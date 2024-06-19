@@ -30,7 +30,7 @@ const requestDetailsSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-}, { timestamps: true });
+});
 
 const RequestDetail = mongoose.model('RequestDetail', requestDetailsSchema);
 

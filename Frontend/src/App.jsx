@@ -6,6 +6,8 @@ import CreateUser from './Components/Profile';
 import DisplayUser from './Components/DisplayUsers';
 import About from './Components/About';
 import UpdateProfile from './Components/UpdateProfile';
+import IncomingRequestsPage from './Components/IncomingRequest';
+import OutgoingRequestsPage from './Components/OutgoingRequest';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route exact path="/user" element={<DisplayUser/>}/>
         <Route exact path="/about" element={<About/>}/>
         <Route exact path="/updateprofile/:profilename" element={<UpdateProfile/>}/>
+        <Route exact path="/incoming" element={<IncomingRequestsPage/>} />
+        <Route exact path="/outgoing" element={<OutgoingRequestsPage/>} />
       </Routes>
     </BrowserRouter>
   );

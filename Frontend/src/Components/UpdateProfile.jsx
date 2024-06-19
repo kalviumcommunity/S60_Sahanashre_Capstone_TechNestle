@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { getCookie } from "../Utils/GetCookie" 
 
 function UpdateProfile() {
   const navigate = useNavigate();
@@ -13,17 +14,6 @@ function UpdateProfile() {
     github: "",
   });
   const [profilePhoto, setProfilePhoto] = useState("");
-
-  const getCookie = (name) => {
-    const cookies = document.cookie.split("; ");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].split("=");
-      if (cookie[0] === name) {
-        return cookie[1];
-      }
-    }
-    return null;
-  };
 
   useEffect(() => {
     const fetchUserData = async () => {

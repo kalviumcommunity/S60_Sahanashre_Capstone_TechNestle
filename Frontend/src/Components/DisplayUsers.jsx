@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
-import Navbar from './Navbar.jsx';
+import Navbar from './Navbar';
 import defaultProfile from '../assets/nest4.png';
 import ConfirmationModal from './ConfirmationModal';
 

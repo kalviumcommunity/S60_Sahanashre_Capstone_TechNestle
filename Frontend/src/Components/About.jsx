@@ -1,10 +1,13 @@
+import Navbar from "./Navbar";
 import mission from "../assets/mission.png";
 import join from "../assets/join.png";
 
 function About() {
   return (
     <div>
-      <p className="font-bold text-2xl text-center mt-10">About TechNestle</p>
+      <Navbar />
+
+      <p className="font-bold text-2xl text-center mt-20 mb-10">About TechNestle</p>
       <div>
         <p className="text-xl mt-5 m-20">
           Welcome to TechNestle, the ultimate destination for individuals
@@ -44,4 +47,5 @@ function About() {
     </div>
   );
 }
+
 export default About;

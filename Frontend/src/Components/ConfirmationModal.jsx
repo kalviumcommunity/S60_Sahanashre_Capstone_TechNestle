@@ -7,7 +7,7 @@ const ConfirmationModal = ({ isOpen, onRequestClose, user, getCookie, onSubmit }
   useEffect(() => {
     if (user) {
       setEmailData({
-        from: "sahusasdi@gmail.com",
+        from: getCookie("username"),
         to: user.username,
         subject: 'Request to Learn a Skill',
         text: `Hello ${user.username},\n\nI am ${getCookie("username")}. I would like to learn ${user.skills.join(", ")} from you.\n\nWith regards,\n${getCookie("username")}`
