@@ -28,7 +28,6 @@ function Login() {
       })
       .then((response) => {
         if (response.status === 201) {
-          // console.log(response.data["token"])
           document.cookie=`username=${response.data._doc.username}`
           document.cookie=`photo=${response.data.photo}`
           document.cookie=`access_token=${response.data["token"]}`

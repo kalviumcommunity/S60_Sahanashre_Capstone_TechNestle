@@ -113,7 +113,7 @@ function UpdateProfile() {
           <input
             type="number"
             id="age"
-            placeholder="Age"
+            placeholder="Years of Experience"
             value={user.age}
             className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
             onChange={handleChange}
