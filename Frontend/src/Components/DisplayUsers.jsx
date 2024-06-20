@@ -75,7 +75,7 @@ function DisplayUser() {
               />
               <div className="mt-4 text-center">
                 <p className="font-bold text-lg text-gray-900">{user.username}</p>
-                <p className="text-sm text-gray-700">Age: {user.age}</p>
+                <p className="text-sm text-gray-700">Years of Experience: {user.age}</p>
                 <p className="text-sm text-gray-700">Skills: {user.skills.join(', ')}</p>
                 <div className="flex justify-center mt-2">
                   {user.socialMedia?.github && (
