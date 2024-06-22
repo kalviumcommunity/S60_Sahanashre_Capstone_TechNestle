@@ -1,38 +1,32 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaLinkedin, FaGithub } from 'react-icons/fa';
+import { FaLinkedin, FaGithub, FaHeart } from 'react-icons/fa';
 import Navbar from './Navbar';
 import defaultProfile from '../assets/nest4.png';
 import ConfirmationModal from './ConfirmationModal';
+import getCookie from '../Utils/GetCookie';
 
 function DisplayUser() {
   const [users, setUsers] = useState([]);
+  const [likedUsers, setLikedUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const getCookie = (name) => {
-    const cookies = document.cookie.split('; ');
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].split('=');
-      if (cookie[0] === name) {
-        return cookie[1];
-      }
-    }
-    return null;
-  };
-
   const loggedInUsername = getCookie('username');
 
+  const fetchUsers = async () => {
+    try {
+      const token = getCookie('access_token'); 
+      const userFetched = await axios.get('http://localhost:8080/api/users', {
+        headers: { Authorization: `Bearer ${token}` }  
+      });
+      setUsers(userFetched.data.users);
+      setLikedUsers(userFetched.data.likedUsers);
+    } catch (error) {
+      console.log('Error in fetching user details', error.message);
+    }
+  };
+
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const userFetched = await axios.get('http://localhost:8080/api/user');
-        setUsers(userFetched.data);
-      }
-      catch (error) {
-        console.log('Error in fetching user details', error.message);
-      }
-    };
     fetchUsers();
   }, []);
 
@@ -47,16 +41,27 @@ function DisplayUser() {
         ...emailData,
         skills: selectedUser.skills
       };
-      const response = await axios.post('http://localhost:8080/api/email', requestData);
+      const response = await axios.post('http://localhost:8080/api/requests', requestData);
       if (response.status === 200) {
         alert('Request sent successfully!');
       } else {
         alert('Failed to send request.');
       }
-    } 
-    catch (error) {
+    } catch (error) {
       console.log('Error in sending request:', error.message);
       alert('Failed to send request.');
+    }
+  };
+
+  const handleLike = async (username) => {
+    try {
+      const token = getCookie('access_token');
+      await axios.post(`http://localhost:8080/api/users/${username}/toggle-like`, { from: loggedInUsername, to: username }, {
+        headers: { Authorization: `Bearer ${token}` } 
+      });
+      fetchUsers();
+    } catch (error) {
+      console.log('Error in liking user', error.message);
     }
   };
 
@@ -97,6 +102,15 @@ function DisplayUser() {
                 >
                   Request
                 </button>
+              </div>
+              <div className="flex justify-center items-center mt-4 w-full">
+                <button
+                  className={`px-4 py-2 rounded-lg ${likedUsers.includes(user.username) ? 'bg-red-500' : 'bg-gray-300'} text-white hover:bg-red-600`}
+                  onClick={() => handleLike(user.username)}
+                >
+                  <FaHeart size={20} />
+                </button> 
+                <p className="ml-2 text-sm text-gray-700 font-bold">{user.likes}</p>
               </div>
             </div>
           ))}

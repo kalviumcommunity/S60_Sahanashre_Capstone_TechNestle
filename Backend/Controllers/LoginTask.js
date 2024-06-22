@@ -12,10 +12,11 @@ const login = async (req, res) => {
         if (!user) {
             return res.status(400).json({ message: "User doesn't exist. Kindly register" });
         }
+        const name = user.username
         
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (passwordMatch) {
-            const token = jwt.sign(email,process.env.SECRET_KEY)
+            const token = jwt.sign(name,process.env.SECRET_KEY)
             res.status(201).json({ token,...user,photo:photo.profilePhoto,message: "Login successful" });
         } 
         else {

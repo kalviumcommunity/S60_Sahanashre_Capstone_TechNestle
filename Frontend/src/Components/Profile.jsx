@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../Utils/GetCookie";
+import getCookie from "../Utils/GetCookie";
 
 function CreateUser() {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ function CreateUser() {
         photoUrl = photoResponse.data.secure_url;
       }
       const userResponse = await axios.post(
-        "http://localhost:8080/api/createuser",
+        "http://localhost:8080/api/users",
         {
           username: getCookie("username"),
           age: user.age,
