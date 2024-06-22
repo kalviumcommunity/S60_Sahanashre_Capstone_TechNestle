@@ -2,7 +2,7 @@ const sendMail = require("../Utils/Mail");
 const RequestDetail = require("../Model/RequestDetails");
 const Register = require("../Model/Register");
 
-const Mail = async (req, res) => {
+const CreateRequest = async (req, res) => {
     const { from, to, subject, text } = req.body;
 
     try {
@@ -34,4 +34,4 @@ const Mail = async (req, res) => {
     }
 };
 
-module.exports = Mail;
+module.exports = CreateRequest;

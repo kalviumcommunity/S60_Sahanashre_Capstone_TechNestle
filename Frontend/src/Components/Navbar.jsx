@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import defaultProfile from "../assets/nest4.png";
-import { getCookie } from "../Utils/GetCookie";
+import getCookie from "../Utils/GetCookie";
 
 function Navbar() {
   const photoUrl = getCookie("photo");

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCookie } from "../Utils/GetCookie" 
+import getCookie from "../Utils/GetCookie" 
 
 function UpdateProfile() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ function UpdateProfile() {
     const fetchUserData = async () => {
       try {
         const token = getCookie("access_token");
-        const response = await axios.get(`http://localhost:8080/api/user/${profilename}`, {
+        const response = await axios.get(`http://localhost:8080/api/users/${profilename}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -75,7 +75,7 @@ function UpdateProfile() {
       const token = getCookie("access_token");
 
       const userResponse = await axios.put(
-        `http://localhost:8080/api/updateuser/${profilename}`,
+        `http://localhost:8080/api/users/${profilename}`,
         {
           username: username,
           age: user.age,

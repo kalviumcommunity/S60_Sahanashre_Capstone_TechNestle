@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { getCookie } from "../Utils/GetCookie";
+import getCookie from "../Utils/GetCookie";
 import Navbar from "./Navbar";
 
 const OutgoingRequestsPage = () => {
@@ -10,7 +10,7 @@ const OutgoingRequestsPage = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/outgoing/${getCookie("username")}`, {
+        const response = await axios.get(`http://localhost:8080/api/users/${getCookie("username")}/outgoing-requests`, {
           headers: {
             Authorization: `Bearer ${getCookie('access_token')}`,
           },
