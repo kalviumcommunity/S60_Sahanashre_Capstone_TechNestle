@@ -30,6 +30,10 @@ function CreateUser() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!profilePhoto) {
+      alert("Please select a profile photo.");
+      return;
+    }
     try {
       let photoUrl = "";
       if (profilePhoto) {
@@ -48,7 +52,7 @@ function CreateUser() {
         {
           username: getCookie("username"),
           age: user.age,
-          skills: user.skills.split(",").map((skill) => skill.trim()),
+          skills: user?.skills.length > 0 ? user?.skills?.split(",").map((skill) => skill.trim()) : [],
           socialMedia: {
             linkedin: user.linkedin,
             github: user.github,
@@ -70,6 +74,9 @@ function CreateUser() {
         console.log("Error creating user");
       }
     } catch (error) {
+      if(error.response.status==401 || error.response.status==403){
+        navigate("/login")
+      }
       console.error("Error creating user:", error);
     }
   };
@@ -96,7 +103,7 @@ function CreateUser() {
             className="bg-gray-100 text-gray-900 rounded-md p-2 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
             onChange={handleChange}
           />
-          <p className="text-gray-500 mb-4 text-sm">Separate each skill with comma</p>
+          <p className="text-gray-500 mb-4 text-sm">Separate each skill with a comma</p>
           <input
             type="text"
             id="linkedin"
@@ -122,6 +129,7 @@ function CreateUser() {
                 type="file"
                 id="profilePhoto"
                 className="hidden"
+                required
                 onChange={handlePhotoChange}
               />
             </label>

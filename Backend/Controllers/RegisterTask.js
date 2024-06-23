@@ -22,8 +22,7 @@ const register = async (req, res) => {
       return res.status(400).json({ message: "Username already exists. Please choose another." });
     } 
     else{
-      const accessToken = jwt.sign(username,process.env.SECRET_KEY)
-      console.log(accessToken)
+      const accessToken = jwt.sign(username,process.env.SECRET_KEY,{ expiresIn: '1h' })
       const newRegister = new registerModel(req.body);
       const savedRegister = await newRegister.save();
       return res.status(201).json(accessToken);
