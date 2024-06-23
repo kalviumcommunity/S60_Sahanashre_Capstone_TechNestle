@@ -6,7 +6,7 @@ require("dotenv").config();
 const register = require("../Controllers/RegisterTask.js");
 const createUser = require("../Controllers/Profile.js");
 const login = require("../Controllers/LoginTask.js");
-const displayUsers = require("../Controllers/DisplayUsers.js");  // Ensure this matches your displayUser controller
+const displayUsers = require("../Controllers/DisplayUsers.js"); 
 const updateUser = require("../Controllers/UpdateProfile.js");
 const deleteUser = require("../Controllers/DeleteProfile.js");
 const createRequest = require("../Controllers/Request.js");
@@ -24,10 +24,14 @@ const AuthenticateToken = (req, res, next) => {
     }
 
     jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
-        if (err) {
-            return res.sendStatus(403); // Forbidden (When the provided token is invalid or expired.)
+        if (err) {       // Forbidden (When the provided token is invalid or expired.)
+            if (err.name === 'TokenExpiredError') {
+                return res.status(403).json({ message: "Token expired. Please login again." });
+            }
+            else {
+                return res.status(403).json({ message: "Invalid token. Please login again." });
+            }
         }
-        console.log(user)
         req.user = user;
         req.id = user.id;
         next();

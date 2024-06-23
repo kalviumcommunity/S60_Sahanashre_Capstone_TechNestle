@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import getCookie from "../Utils/GetCookie";
 import Navbar from "./Navbar";
+import { useNavigate } from 'react-router-dom';
 
 const IncomingRequestsPage = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -18,6 +20,9 @@ const IncomingRequestsPage = () => {
         setRequests(response.data);
         setLoading(false);
       } catch (error) {
+        if(error.response.status==401 || error.response.status==403){
+          navigate("/login")
+        }
         console.error('Error fetching incoming requests:', error);
         setLoading(false);
       }
@@ -37,6 +42,9 @@ const IncomingRequestsPage = () => {
         request._id === requestId ? { ...request, status } : request
       ));
     } catch (error) {
+      if(error.response.status==401 || error.response.status==403){
+        navigate("/login")
+      }
       console.error('Error updating request status:', error);
     }
   };
