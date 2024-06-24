@@ -52,7 +52,10 @@ function CreateUser() {
         {
           username: getCookie("username"),
           age: user.age,
-          skills: user?.skills.length > 0 ? user?.skills?.split(",").map((skill) => skill.trim()) : [],
+          skills:
+            user?.skills.length > 0
+              ? user?.skills?.split(",").map((skill) => skill.trim())
+              : [],
           socialMedia: {
             linkedin: user.linkedin,
             github: user.github,
@@ -74,8 +77,8 @@ function CreateUser() {
         console.log("Error creating user");
       }
     } catch (error) {
-      if(error.response.status==401 || error.response.status==403){
-        navigate("/login")
+      if (error.response.status == 401 || error.response.status == 403) {
+        navigate("/login");
       }
       console.error("Error creating user:", error);
     }
@@ -85,62 +88,96 @@ function CreateUser() {
     <div className="flex flex-col items-center justify-center h-screen text-center">
       <div className="w-full max-w-md rounded-lg shadow-xl p-7">
         <form onSubmit={handleSubmit}>
-          <input
-            type="number"
-            id="age"
-            placeholder="Years of Experience"
-            value={user.age}
-            className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
-            onChange={handleChange}
-            required
-          />
-          <br />
-          <input
-            type="text"
-            id="skills"
-            placeholder="Skills"
-            value={user.skills}
-            className="bg-gray-100 text-gray-900 rounded-md p-2 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
-            onChange={handleChange}
-          />
-          <p className="text-gray-500 mb-4 text-sm">Separate each skill with a comma</p>
-          <input
-            type="text"
-            id="linkedin"
-            placeholder="LinkedIn Link"
-            value={user.linkedin}
-            className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
-            onChange={handleChange}
-          />
-          <br />
-          <input
-            type="text"
-            id="github"
-            placeholder="Github Link"
-            value={user.github}
-            className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
-            onChange={handleChange}
-          />
-          <br />
-          <div className="flex items-center justify-center mb-4">
-            <label className="bg-gray-100 text-gray-900 rounded-md p-2 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition cursor-pointer">
-              <span>Profile Photo</span>
-              <input
-                type="file"
-                id="profilePhoto"
-                className="hidden"
-                required
-                onChange={handlePhotoChange}
-              />
+          <div className="mb-4">
+            <label
+              htmlFor="age"
+              className="block text-gray-700 text-sm font-bold mb-1"
+            >
+              Years of Experience <span className="text-red-500">*</span>
             </label>
-            {profilePhoto && (
-              <span className="ml-2 text-gray-500 text-sm">
-                {profilePhoto.name}
-              </span>
-            )}
+            <input
+              type="number"
+              id="age"
+              placeholder="Years of Experience"
+              value={user.age}
+              className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
+              onChange={handleChange}
+              required
+            />
           </div>
-          <br />
-          <button className="bg-gray-100 rounded-md font-bold p-2 text-blue-600 text-l focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition">
+          <div className="mb-4">
+            <label
+              htmlFor="skills"
+              className="block text-gray-700 text-sm font-bold mb-1"
+            >
+              Skills
+            </label>
+            <input
+              type="text"
+              id="skills"
+              placeholder="Skills"
+              value={user.skills}
+              className="bg-gray-100 text-gray-900 rounded-md p-2 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
+              onChange={handleChange}
+            />
+            <p className="text-gray-500 mb-4 text-sm">
+              Separate each skill with a comma
+            </p>
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="linkedin"
+              className="block text-gray-700 text-sm font-bold mb-1"
+            >
+              LinkedIn Link
+            </label>
+            <input
+              type="text"
+              id="linkedin"
+              placeholder="LinkedIn Link"
+              value={user.linkedin}
+              className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="github"
+              className="block text-gray-700 text-sm font-bold mb-1"
+            >
+              Github Link
+            </label>
+            <input
+              type="text"
+              id="github"
+              placeholder="Github Link"
+              value={user.github}
+              className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="profilePhoto"
+              className="block text-gray-700 text-sm font-bold mb-1"
+            >
+              Profile Photo <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="file"
+              id="profilePhoto"
+              className="hidden"
+              onChange={handlePhotoChange}
+              required
+            />
+            <label
+              htmlFor="profilePhoto"
+              className="bg-blue-600 text-white text-xs font-bold py-2 px-4 rounded cursor-pointer"
+            >
+              Choose a file
+            </label>
+          </div>
+          <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 transition-all duration-300">
             Add User
           </button>
         </form>

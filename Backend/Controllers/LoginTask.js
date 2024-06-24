@@ -17,7 +17,7 @@ const login = async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (passwordMatch) {
             const token = jwt.sign({ username: name }, process.env.SECRET_KEY, { expiresIn: '1h' });
-            res.status(201).json({ token,...user,photo:photo.profilePhoto,message: "Login successful" });
+            res.status(201).json({ token,...user,photo:photo?.profilePhoto ?? "",message: "Login successful" });
         } 
         else {
             res.status(400).json({ message: "Details given by the user did not match" });

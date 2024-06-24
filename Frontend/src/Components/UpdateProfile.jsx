@@ -14,18 +14,21 @@ function UpdateProfile() {
   });
   const [profilePhoto, setProfilePhoto] = useState("");
   const [photoUrl, setPhotoUrl] = useState(getCookie("photo"));
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const token = getCookie("access_token");
-        const response = await axios.get(`http://localhost:8080/api/users/${profilename}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.get(
+          `http://localhost:8080/api/users/${profilename}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
         const userData = response.data;
         setUser({
           email: userData.email || "",
@@ -36,9 +39,9 @@ function UpdateProfile() {
         });
         setPhotoUrl(userData.profilePhoto || getCookie("photo") || "");
       } catch (error) {
-        if(error.response.status==401 || error.response.status==403){
-          console.log("Sessions expired")
-          navigate("/login")
+        if (error.response.status == 401 || error.response.status == 403) {
+          console.log("Sessions expired");
+          navigate("/login");
         }
         console.error("Error fetching user data:", error);
       }
@@ -83,7 +86,10 @@ function UpdateProfile() {
         {
           username: username,
           age: user.age,
-          skills: user?.skills.length > 0 ? user?.skills?.split(",").map((skill) => skill.trim()) : [],
+          skills:
+            user?.skills.length > 0
+              ? user?.skills?.split(",").map((skill) => skill.trim())
+              : [],
           socialMedia: {
             linkedin: user.linkedin,
             github: user.github,
@@ -103,11 +109,14 @@ function UpdateProfile() {
       if (userResponse.status === 200) {
         navigate("/user");
       } else {
-        console.log("Error updating user: Non-200 status code", userResponse.status);
+        console.log(
+          "Error updating user: Non-200 status code",
+          userResponse.status
+        );
       }
     } catch (error) {
-      if(error.response.status==401 || error.response.status==403){
-        navigate("/login")
+      if (error.response.status == 401 || error.response.status == 403) {
+        navigate("/login");
       }
       console.error("Error updating user:", error);
     }
@@ -125,7 +134,10 @@ function UpdateProfile() {
         )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="age" className="block text-gray-700 text-sm font-bold mb-1">
+            <label
+              htmlFor="age"
+              className="block text-gray-700 text-sm font-bold mb-1"
+            >
               Years of Experience
             </label>
             <input
@@ -139,7 +151,10 @@ function UpdateProfile() {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="skills" className="block text-gray-700 text-sm font-bold mb-1">
+            <label
+              htmlFor="skills"
+              className="block text-gray-700 text-sm font-bold mb-1"
+            >
               Skills
             </label>
             <input
@@ -150,10 +165,15 @@ function UpdateProfile() {
               className="bg-gray-100 text-gray-900 rounded-md p-2 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
               onChange={handleChange}
             />
-            <p className="text-gray-500 text-xs">Separate each skill with comma</p>
+            <p className="text-gray-500 text-xs">
+              Separate each skill with comma
+            </p>
           </div>
           <div className="mb-4">
-            <label htmlFor="linkedin" className="block text-gray-700 text-sm font-bold mb-1">
+            <label
+              htmlFor="linkedin"
+              className="block text-gray-700 text-sm font-bold mb-1"
+            >
               LinkedIn Link
             </label>
             <input
@@ -166,7 +186,10 @@ function UpdateProfile() {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="github" className="block text-gray-700 text-sm font-bold mb-1">
+            <label
+              htmlFor="github"
+              className="block text-gray-700 text-sm font-bold mb-1"
+            >
               Github Link
             </label>
             <input
@@ -179,7 +202,10 @@ function UpdateProfile() {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="profilePhoto" className="block text-gray-700 text-sm font-bold mb-1">
+            <label
+              htmlFor="profilePhoto"
+              className="block text-gray-700 text-sm font-bold mb-1"
+            >
               Profile Photo
             </label>
             <input
@@ -195,7 +221,7 @@ function UpdateProfile() {
               Choose a file
             </label>
           </div>
-          <button className="bg-gray-100 rounded-md font-bold p-2 text-blue-600 text-l focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition">
+          <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 transition-all duration-300">
             Update Profile
           </button>
         </form>
