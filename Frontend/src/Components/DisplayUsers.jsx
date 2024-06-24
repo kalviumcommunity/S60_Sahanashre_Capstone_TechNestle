@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import ConfirmationModal from "./ConfirmationModal";
 import getCookie from "../Utils/GetCookie";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_SERVER } from "../Utils/constants";
 
 function DisplayUser() {
   const [users, setUsers] = useState([]);
@@ -18,7 +19,7 @@ function DisplayUser() {
   const fetchUsers = async () => {
     try {
       const token = getCookie("access_token");
-      const response = await axios.get("http://localhost:8080/api/users", {
+      const response = await axios.get(`${BACKEND_SERVER}/users`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(response.data.users);
@@ -49,7 +50,7 @@ function DisplayUser() {
         skills: selectedUser.skills,
       };
       const response = await axios.post(
-        "http://localhost:8080/api/requests",
+        `${BACKEND_SERVER}/requests`,
         requestData
       );
       if (response.status === 200) {
@@ -70,7 +71,7 @@ function DisplayUser() {
     try {
       const token = getCookie("access_token");
       await axios.post(
-        `http://localhost:8080/api/users/${username}/toggle-like`,
+        `${BACKEND_SERVER}/users/${username}/toggle-like`,
         { from: loggedInUsername, to: username },
         {
           headers: { Authorization: `Bearer ${token}` },

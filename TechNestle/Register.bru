@@ -5,7 +5,15 @@ meta {
 }
 
 post {
-  url: http://localhost:8080/api/register
-  body: none
+  url: {{host}}/register
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "username":"domi",
+    "email":"domi@gmail.com",
+    "password":"domi"
+  }
 }

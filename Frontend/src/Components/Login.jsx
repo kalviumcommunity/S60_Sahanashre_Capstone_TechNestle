@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BACKEND_SERVER } from "../Utils/constants";
 
 function Login() {
   const [login, setLogin] = useState({
@@ -22,7 +23,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8080/api/login", {
+      .post(`${BACKEND_SERVER}/login`, {
         email: login.email,
         password: login.password,
       })
