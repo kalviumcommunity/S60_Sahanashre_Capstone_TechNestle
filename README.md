@@ -31,3 +31,8 @@ Explore the principles of web design, including layout, color theory, typography
 Learn how to create websites that adapt seamlessly to different screen sizes and devices, ensuring an optimal user experience for all.
 
 Join the vibrant TechNestle today and embark on your journey to become a proficient web developer!
+
+## Links
+
+- Backend: [https://s60-sahanashre-capstone-technestle-1.onrender.com](https://s60-sahanashre-capstone-technestle-1.onrender.com)
+- Frontend: [https://technestle.netlify.app/](https://technestle.netlify.app/)

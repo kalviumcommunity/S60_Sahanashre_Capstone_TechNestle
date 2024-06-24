@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import getCookie from "../Utils/GetCookie";
+import { BACKEND_SERVER } from "../Utils/constants";
 
 function CreateUser() {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ function CreateUser() {
         photoUrl = photoResponse.data.secure_url;
       }
       const userResponse = await axios.post(
-        "http://localhost:8080/api/users",
+        `${BACKEND_SERVER}/users`,
         {
           username: getCookie("username"),
           age: user.age,

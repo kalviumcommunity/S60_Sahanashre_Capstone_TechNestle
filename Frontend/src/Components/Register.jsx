@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BACKEND_SERVER } from "../Utils/constants";
 
 function Signup() {
   const [user, setUser] = useState({
@@ -23,7 +24,7 @@ function Signup() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8080/api/register", {
+      const res = await axios.post(`${BACKEND_SERVER}/register`, {
         username: user.username,
         email: user.email,
         password: user.password,
