@@ -8,6 +8,8 @@ import About from './Components/About';
 import UpdateProfile from './Components/UpdateProfile';
 import IncomingRequestsPage from './Components/IncomingRequest';
 import OutgoingRequestsPage from './Components/OutgoingRequest';
+import FrontendRoadmap from './Components/FrontendRoadmap';
+import BackendRoadmap from './Components/BackendRoadmap';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route exact path="/updateprofile/:profilename" element={<UpdateProfile/>}/>
         <Route exact path="/incoming" element={<IncomingRequestsPage/>} />
         <Route exact path="/outgoing" element={<OutgoingRequestsPage/>} />
+        <Route path="/frontend" element={<FrontendRoadmap />} />
+        <Route path="/backend" element={<BackendRoadmap />} />
       </Routes>
     </BrowserRouter>
   );

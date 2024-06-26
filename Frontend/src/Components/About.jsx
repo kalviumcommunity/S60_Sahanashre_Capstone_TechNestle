@@ -7,7 +7,7 @@ function About() {
     <div>
       <Navbar />
 
-      <p className="font-bold text-2xl text-center mt-20 mb-10">About TechNestle</p>
+      <p className="font-bold text-2xl text-center mt-28 mb-10">About TechNestle</p>
       <div>
         <p className="text-xl mt-5 m-20">
           Welcome to TechNestle, the ultimate destination for individuals
@@ -22,7 +22,7 @@ function About() {
       <p className="font-bold text-2xl ml-10">Our Mission🌟</p>
 
       <div className="m-14 flex justify-center items-center place-content-center gap-14">
-        <img src={mission} alt="Mission Image" className="h-64 w-96" />
+        <img src={mission} alt="Mission Image" className="h-64 w-96 rounded-xl" />
         <p className="text-xl">
           TechNestle is dedicated to providing a comprehensive platform where
           developers can learn, teach, and collaborate effectively. Our mission
@@ -34,8 +34,7 @@ function About() {
 
       <p className="font-bold text-2xl ml-10">Join Us Today!🚀</p>
       <div className="m-14 flex justify-center items-center place-content-center gap-14">
-        <img src={join} alt="Join Image" className="w-96" />
-        <p className="text-xl">
+      <p className="text-xl">
           Whether you are passionate about crafting visually stunning frontend
           interfaces, mastering the intricacies of backend development, or
           designing seamless user experiences, TechNestle has something for you.
@@ -43,6 +42,7 @@ function About() {
           becoming a proficient web developer. Together, let us shape the future
           of the web!
         </p>
+        <img src={join} alt="Join Image" className="w-96 rounded-xl" />
       </div>
     </div>
   );
