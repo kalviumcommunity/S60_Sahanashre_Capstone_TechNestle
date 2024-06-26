@@ -7,6 +7,7 @@ const displayUser = async (req, res) => {
 
         let users = await userModel.find({});
         users = users.filter(user => user.username !== loggedInUser.username && user.skills && user.skills.length > 0);
+        
         const likes = await likeModel.find({ from: req.user.username });
         const likedUsers = likes.map(like => like.to);
 
@@ -15,7 +16,7 @@ const displayUser = async (req, res) => {
                 const topDevelopers = await userModel.find({})
                     .sort({ likes: -1 })
                     .limit(3);
-                return topDevelopers;
+                return topDevelopers.filter(dev => dev.username !== loggedInUser.username);
             } catch (error) {
                 console.error(error);
                 throw error;
