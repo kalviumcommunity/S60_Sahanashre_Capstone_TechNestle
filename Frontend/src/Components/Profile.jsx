@@ -1,8 +1,11 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import getCookie from "../Utils/GetCookie";
 import { BACKEND_SERVER } from "../Utils/constants";
+import image1 from "../assets/user1.png";
+import image2 from "../assets/user2.png";
+import image3 from "../assets/user3.png";
 
 function CreateUser() {
   const navigate = useNavigate();
@@ -14,6 +17,15 @@ function CreateUser() {
     github: "",
   });
   const [profilePhoto, setProfilePhoto] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const images = [image2, image1, image3];
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 2000);
+    return () => clearInterval(intervalId);
+  }, [images.length]);
 
   const handleChange = (event) => {
     const { id, value } = event.target;
@@ -42,13 +54,13 @@ function CreateUser() {
         formData.append("file", profilePhoto);
         formData.append("upload_preset", "lfv0xwf1");
 
-        const photoResponse = await axios.post(
+        const { data: photoData } = await axios.post(
           "https://api.cloudinary.com/v1_1/deilbvy6o/image/upload",
           formData
         );
-        photoUrl = photoResponse.data.secure_url;
+        photoUrl = photoData.secure_url;
       }
-      const userResponse = await axios.post(
+      const { status } = await axios.post(
         `${BACKEND_SERVER}/users`,
         {
           username: getCookie("username"),
@@ -71,14 +83,14 @@ function CreateUser() {
         }
       );
 
-      if (userResponse.status === 201) {
+      if (status === 201) {
         document.cookie = `photo=${photoUrl}`;
         navigate("/user");
       } else {
         console.log("Error creating user");
       }
     } catch (error) {
-      if (error.response.status == 401 || error.response.status == 403) {
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
         navigate("/login");
       }
       console.error("Error creating user:", error);
@@ -86,102 +98,126 @@ function CreateUser() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-center">
-      <div className="w-full max-w-md rounded-lg shadow-xl p-7">
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label
-              htmlFor="age"
-              className="block text-gray-700 text-sm font-bold mb-1"
-            >
-              Years of Experience <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="number"
-              id="age"
-              placeholder="Years of Experience"
-              value={user.age}
-              className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="skills"
-              className="block text-gray-700 text-sm font-bold mb-1"
-            >
-              Skills
-            </label>
-            <input
-              type="text"
-              id="skills"
-              placeholder="Skills"
-              value={user.skills}
-              className="bg-gray-100 text-gray-900 rounded-md p-2 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
-              onChange={handleChange}
-            />
-            <p className="text-gray-500 mb-4 text-sm">
-              Separate each skill with a comma
-            </p>
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="linkedin"
-              className="block text-gray-700 text-sm font-bold mb-1"
-            >
-              LinkedIn Link
-            </label>
-            <input
-              type="text"
-              id="linkedin"
-              placeholder="LinkedIn Link"
-              value={user.linkedin}
-              className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="github"
-              className="block text-gray-700 text-sm font-bold mb-1"
-            >
-              Github Link
-            </label>
-            <input
-              type="text"
-              id="github"
-              placeholder="Github Link"
-              value={user.github}
-              className="bg-gray-100 text-gray-900 rounded-md p-2 mb-4 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="profilePhoto"
-              className="block text-gray-700 text-sm font-bold mb-1"
-            >
-              Profile Photo <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="file"
-              id="profilePhoto"
-              className="hidden"
-              onChange={handlePhotoChange}
-              required
-            />
-            <label
-              htmlFor="profilePhoto"
-              className="bg-blue-600 text-white text-xs font-bold py-2 px-4 rounded cursor-pointer"
-            >
-              Choose a file
-            </label>
-          </div>
-          <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 transition-all duration-300">
-            Add User
-          </button>
-        </form>
+    <div className="flex items-center justify-center h-screen bg-white p-8">
+      <div className="flex bg-blue-100 rounded-lg shadow-lg overflow-hidden w-3/4 md:w-2/3 lg:w-1/2 h-[90vh] p-8 gap-6">
+        <div className="hidden md:flex md:w-1/2 flex-col justify-center items-center">
+          <img
+            src={images[currentIndex]}
+            alt={`Image ${currentIndex + 1}`}
+            className="w-full h-3/5 object-cover rounded-lg"
+          />
+        </div>
+        <div className="w-full md:w-1/2 p-8 flex flex-col justify-center items-center">
+          <h2 className="text-center text-2xl font-bold text-black mb-6">
+            Create User Profile
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-6 w-full">
+            <div className="w-full">
+              <label
+                htmlFor="age"
+                className="block text-gray-700 text-sm font-bold mb-1 text-center"
+              >
+                Years of Experience <span className="text-red-500">*</span>
+              </label>
+              <div className="flex justify-center">
+                <input
+                  type="number"
+                  id="age"
+                  placeholder="Years of Experience"
+                  value={user.age}
+                  onChange={handleChange}
+                  className="appearance-none block w-4/5 px-4 py-2 border border-blue-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm text-center"
+                  required
+                />
+              </div>
+            </div>
+            <div className="w-full">
+              <label
+                htmlFor="skills"
+                className="block text-gray-700 text-sm font-bold mb-1 text-center"
+              >
+                Skills
+              </label>
+              <div className="flex justify-center">
+                <input
+                  type="text"
+                  id="skills"
+                  placeholder="Skills"
+                  value={user.skills}
+                  onChange={handleChange}
+                  className="appearance-none block w-4/5 px-4 py-2 border border-blue-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm text-center"
+                />
+              </div>
+            </div>
+            <div className="w-full">
+              <label
+                htmlFor="linkedin"
+                className="block text-gray-700 text-sm font-bold mb-1 text-center"
+              >
+                LinkedIn Link
+              </label>
+              <div className="flex justify-center">
+                <input
+                  type="text"
+                  id="linkedin"
+                  placeholder="LinkedIn Link"
+                  value={user.linkedin}
+                  onChange={handleChange}
+                  className="appearance-none block w-4/5 px-4 py-2 border border-blue-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm text-center"
+                />
+              </div>
+            </div>
+            <div className="w-full">
+              <label
+                htmlFor="github"
+                className="block text-gray-700 text-sm font-bold mb-1 text-center"
+              >
+                Github Link
+              </label>
+              <div className="flex justify-center">
+                <input
+                  type="text"
+                  id="github"
+                  placeholder="Github Link"
+                  value={user.github}
+                  onChange={handleChange}
+                  className="appearance-none block w-4/5 px-4 py-2 border border-blue-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm text-center"
+                />
+              </div>
+            </div>
+            <div className="w-full">
+              <label
+                htmlFor="profilePhoto"
+                className="block text-gray-700 text-sm font-bold mb-1 text-center"
+              >
+                Profile Photo <span className="text-red-500">*</span>
+              </label>
+              <div className="flex justify-center">
+                <input
+                  type="file"
+                  id="profilePhoto"
+                  className="hidden"
+                  onChange={handlePhotoChange}
+                  required
+                />
+                <label
+                  htmlFor="profilePhoto"
+                  className="w-2/4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-400 cursor-pointer text-center"
+                >
+                  Choose a file
+                </label>
+              </div>
+            </div>
+            <div className="w-full flex justify-center">
+              <button
+                type="submit"
+                className="w-3/2 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-900 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-400"
+              >
+                Add User
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

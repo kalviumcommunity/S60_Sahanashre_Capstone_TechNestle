@@ -1,38 +1,41 @@
-import { NavLink, useNavigate } from "react-router-dom";
-import getCookie from "../Utils/GetCookie";
+import { NavLink, useNavigate } from 'react-router-dom';
+import getCookie from '../Utils/GetCookie';
+import techlogo from '../assets/schoolbg.png';
 
 function Navbar() {
-  const photoUrl = getCookie("photo");
-  const username = getCookie("username");
+  const photoUrl = getCookie('photo');
+  const username = getCookie('username');
   const navigate = useNavigate();
 
   const logout = () => {
-    document.cookie = "username=; expires=Thu, 01 Jan 1970";
-    document.cookie = "access_token=; expires=Thu, 01 Jan 1970";
-    document.cookie = "photo=; expires=Thu, 01 Jan 1970";
-    navigate("/login");
+    document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    document.cookie = 'photo=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    navigate('/login');
   };
 
   return (
-    <nav className="flex flex-row gap-x-10 inset-x-0 place-content-center top-0 fixed border bg-blue-500 h-14 w-full items-center">
-      <NavLink to="/about" className="flex items-center gap-x-2 hover:text-white">
-        <p className="cursor-pointer">About</p>
-      </NavLink>
-      <NavLink to="/incoming" className="flex items-center gap-x-2 hover:text-white">
-        <p className="cursor-pointer">Incoming Requests</p>
-      </NavLink>
-      <NavLink to="/outgoing" className="flex items-center gap-x-2 hover:text-white">
-        <p className="cursor-pointer">Outgoing Requests</p>
-      </NavLink>
-      <img
-        src={photoUrl}
-        onClick={() => navigate(`/updateprofile/${username}`)}
-        alt={username}
-        className="h-12 w-12 rounded-full cursor-pointer"
-      />
-      <p onClick={logout} className="cursor-pointer hover:text-white">
-        Logout
-      </p>
+    <nav className="flex justify-between items-center p-4 shadow-md bg-gray-100 fixed w-full top-0">
+      <div className="flex items-center space-x-4">
+        <img src={techlogo} alt="TechLogo" className="h-8" />
+        <NavLink to="/" className="text-gray-800 font-bold text-xl hover:text-blue-600">Tech Nestle</NavLink>
+      </div>
+      <div className="flex space-x-6">
+        <NavLink to="/about" className="text-gray-800 hover:text-blue-600 text-lg">About</NavLink>
+        <NavLink to="/incoming" className="text-gray-800 hover:text-blue-600 text-lg">Awaiting Approval</NavLink>
+        <NavLink to="/outgoing" className="text-gray-800 hover:text-blue-600 text-lg">Awaiting Response</NavLink>
+        <NavLink to="/frontend" className="text-gray-800 hover:text-blue-600 text-lg">UI Pathway</NavLink>
+        <NavLink to="/backend" className="text-gray-800 hover:text-blue-600 text-lg">Server-side Pathway</NavLink>
+      </div>
+      <div className="flex items-center space-x-4">
+        <img
+          src={photoUrl}
+          onClick={() => navigate(`/updateprofile/${username}`)}
+          alt={username}
+          className="h-12 w-12 rounded-full cursor-pointer"
+        />
+        <p onClick={logout} className="text-gray-800 cursor-pointer hover:text-blue-500 text-lg">Logout</p>
+      </div>
     </nav>
   );
 }

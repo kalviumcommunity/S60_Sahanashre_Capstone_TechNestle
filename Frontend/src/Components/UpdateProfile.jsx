@@ -40,7 +40,7 @@ function UpdateProfile() {
         });
         setPhotoUrl(userData.profilePhoto || getCookie("photo") || "");
       } catch (error) {
-        if (error.response.status == 401 || error.response.status == 403) {
+        if (error.response.status === 401 || error.response.status === 403) {
           console.log("Sessions expired");
           navigate("/login");
         }
@@ -116,7 +116,7 @@ function UpdateProfile() {
         );
       }
     } catch (error) {
-      if (error.response.status == 401 || error.response.status == 403) {
+      if (error.response.status === 401 || error.response.status === 403) {
         navigate("/login");
       }
       console.error("Error updating user:", error);
@@ -124,8 +124,8 @@ function UpdateProfile() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-center">
-      <div className="w-full max-w-md rounded-lg shadow-xl p-4">
+    <div className="flex items-center justify-center h-screen p-6">
+      <div className="flex flex-col bg-white rounded-lg shadow-lg overflow-hidden bg-blue-100 w-full max-w-md p-8 gap-6">
         {photoUrl && (
           <img
             src={photoUrl}
@@ -133,8 +133,8 @@ function UpdateProfile() {
             className="w-24 h-24 rounded-full mx-auto mb-4"
           />
         )}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+        <form onSubmit={handleSubmit} className="space-y-6 w-full text-center">
+          <div className="w-full">
             <label
               htmlFor="age"
               className="block text-gray-700 text-sm font-bold mb-1"
@@ -146,12 +146,12 @@ function UpdateProfile() {
               id="age"
               placeholder="Years of Experience"
               value={user.age}
-              className="bg-gray-100 text-gray-900 rounded-md p-2 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
+              className="appearance-none block w-4/6 mx-auto px-4 py-2 border border-blue-900 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm"
               onChange={handleChange}
               required
             />
           </div>
-          <div className="mb-4">
+          <div className="w-full">
             <label
               htmlFor="skills"
               className="block text-gray-700 text-sm font-bold mb-1"
@@ -163,14 +163,14 @@ function UpdateProfile() {
               id="skills"
               placeholder="Skills"
               value={user.skills}
-              className="bg-gray-100 text-gray-900 rounded-md p-2 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
+              className="appearance-none block w-4/6 mx-auto px-4 py-2 border border-blue-900 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm"
               onChange={handleChange}
             />
             <p className="text-gray-500 text-xs">
-              Separate each skill with comma
+              Separate each skill with a comma
             </p>
           </div>
-          <div className="mb-4">
+          <div className="w-full">
             <label
               htmlFor="linkedin"
               className="block text-gray-700 text-sm font-bold mb-1"
@@ -182,11 +182,11 @@ function UpdateProfile() {
               id="linkedin"
               placeholder="LinkedIn Link"
               value={user.linkedin}
-              className="bg-gray-100 text-gray-900 rounded-md p-2 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
+              className="appearance-none block w-4/6 mx-auto px-4 py-2 border border-blue-900 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm"
               onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
+          <div className="w-full">
             <label
               htmlFor="github"
               className="block text-gray-700 text-sm font-bold mb-1"
@@ -198,11 +198,11 @@ function UpdateProfile() {
               id="github"
               placeholder="Github Link"
               value={user.github}
-              className="bg-gray-100 text-gray-900 rounded-md p-2 focus:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-700 transition"
+              className="appearance-none block w-4/6 mx-auto px-4 py-2 border border-blue-900 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm"
               onChange={handleChange}
             />
           </div>
-          <div className="mb-4">
+          <div className="w-full">
             <label
               htmlFor="profilePhoto"
               className="block text-gray-700 text-sm font-bold mb-1"
@@ -217,14 +217,16 @@ function UpdateProfile() {
             />
             <label
               htmlFor="profilePhoto"
-              className="bg-blue-600 text-white text-xs font-bold py-2 px-4 rounded cursor-pointer"
+              className="bg-green-700 text-white text-xs font-bold py-2 px-4 rounded cursor-pointer"
             >
               Choose a file
             </label>
           </div>
-          <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50 transition-all duration-300">
-            Update Profile
-          </button>
+          <div className="w-full flex justify-center">
+            <button className="w-2/6 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-900 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
+              Update Profile
+            </button>
+          </div>
         </form>
       </div>
     </div>

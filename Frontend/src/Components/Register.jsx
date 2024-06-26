@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_SERVER } from "../Utils/constants";
+import image from "../assets/t1.png"; 
 
 function Signup() {
   const [user, setUser] = useState({
@@ -29,16 +30,17 @@ function Signup() {
         email: user.email,
         password: user.password,
       });
-      console.log(res.data)
 
       if (res.data && res.data.message) {
         let errorMessage = "";
         switch (res.data.message) {
           case "User with this email already exists":
-            errorMessage = "An account with this email already exists. Please use a different email.";
+            errorMessage =
+              "An account with this email already exists. Please use a different email.";
             break;
           case "Username already exists. Please choose another.":
-            errorMessage = "This username is already taken. Please choose a different username.";
+            errorMessage =
+              "This username is already taken. Please choose a different username.";
             break;
           default:
             errorMessage = "An unexpected error occurred. Please try again.";
@@ -47,25 +49,21 @@ function Signup() {
           ...user,
           error: errorMessage,
         });
-      }
-       else if (res.status === 201) {
+      } else if (res.status === 201) {
         setUser({
           ...user,
           error: "",
         });
         document.cookie = `username=${user.username}`;
-        document.cookie = `access_token=${res.data}`
+        document.cookie = `access_token=${res.data}`;
         navigate("/createuser");
-      }
-       else {
+      } else {
         setUser({
           ...user,
           error: "An unexpected error occurred. Please try again.",
         });
       }
-    } 
-    
-    catch (err) {
+    } catch (err) {
       let errorMessage = "An unexpected error occurred. Please try again.";
       if (err.response && err.response.data && err.response.data.message) {
         errorMessage = err.response.data.message;
@@ -79,42 +77,62 @@ function Signup() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen dark">
-      <div className="w-full max-w-md bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold text-gray-200 mb-4">Signup Form</h2>
-        <form className="flex flex-col" onSubmit={handleSubmit}>
-          <input
-            id="username"
-            placeholder="Username"
-            className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-            type="text"
-            value={user.username}
-            onChange={handleChange}
+    <div className="flex items-center justify-center h-screen bg-white p-6">
+      <div className="flex bg-blue-100 rounded-lg shadow-lg overflow-hidden w-3/4 md:w-2/3 lg:w-1/2 h-5/6 p-8 gap-6">
+        <div className="hidden md:block md:w-1/2">
+          <img
+            src={image}
+            alt="Signup illustration"
+            className="h-full w-full object-cover rounded-lg"
           />
-          <input
-            id="email"
-            placeholder="Email"
-            className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-            type="email"
-            value={user.email}
-            onChange={handleChange}
-          />
-          <input
-            id="password"
-            placeholder="Password"
-            className="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-            type="password"
-            value={user.password}
-            onChange={handleChange}
-          />
-          <button
-            className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150"
-            type="submit"
-          >
-            Sign Up
-          </button>
-        </form>
-        {user.error && <p className="text-red-500 mt-2">{user.error}</p>}
+        </div>
+        <div className="w-full md:w-1/2 p-8 flex flex-col justify-center items-center">
+          <h2 className="text-center text-2xl font-bold text-black mb-6">Signup Form</h2>
+          <form onSubmit={handleSubmit} className="space-y-6 w-full">
+            <div className="w-full flex justify-center">
+              <input
+                id="username"
+                placeholder="Username"
+                value={user.username}
+                onChange={handleChange}
+                className="appearance-none block w-4/5 px-4 py-2 border border-blue-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm text-center"
+                type="text"
+                required
+              />
+            </div>
+            <div className="w-full flex justify-center">
+              <input
+                id="email"
+                placeholder="Email"
+                value={user.email}
+                onChange={handleChange}
+                className="appearance-none block w-4/5 px-4 py-2 border border-blue-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm text-center"
+                type="email"
+                required
+              />
+            </div>
+            <div className="w-full flex justify-center">
+              <input
+                id="password"
+                placeholder="Password"
+                value={user.password}
+                onChange={handleChange}
+                className="appearance-none block w-4/5 px-4 py-2 border border-blue-800 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm text-center"
+                type="password"
+                required
+              />
+            </div>
+            <div className="w-full flex justify-center">
+              <button
+                type="submit"
+                className="w-2/5 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-800 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
+              >
+                Sign Up
+              </button>
+            </div>
+          </form>
+          {user.error && <p className="text-red-500 mt-2">{user.error}</p>}
+        </div>
       </div>
     </div>
   );
