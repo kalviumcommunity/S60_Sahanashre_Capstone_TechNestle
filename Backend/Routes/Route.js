@@ -46,9 +46,9 @@ Router.get("/users/:profilename", AuthenticateToken, displayUser);
 Router.get("/users/:profilename/incoming-requests", AuthenticateToken, IncomingRequest);
 Router.get("/users/:profilename/outgoing-requests", AuthenticateToken, OutgoingRequest);
 Router.put("/users/:profilename", AuthenticateToken, updateUser);
-Router.post("/users/:profilename/toggle-like", ToogleLikeStatus);
+Router.post("/users/:profilename/toggle-like", AuthenticateToken, ToogleLikeStatus);
 Router.delete("/users/:id", deleteUser);
-Router.post("/requests", createRequest);
+Router.post("/requests", AuthenticateToken, createRequest);
 Router.put("/requests/:id", AuthenticateToken, UpdateRequestStatus);
 
 module.exports = Router;

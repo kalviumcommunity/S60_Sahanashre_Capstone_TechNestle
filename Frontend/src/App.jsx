@@ -26,6 +26,7 @@ function App() {
         <Route exact path="/outgoing" element={<OutgoingRequestsPage/>} />
         <Route path="/frontend" element={<FrontendRoadmap />} />
         <Route path="/backend" element={<BackendRoadmap />} />
+        <Route path="*" element={<Mainpg/>}/>
       </Routes>
     </BrowserRouter>
   );
