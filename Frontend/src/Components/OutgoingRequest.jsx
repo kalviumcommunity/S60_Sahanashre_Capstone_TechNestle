@@ -35,8 +35,9 @@ const OutgoingRequestsPage = () => {
   if (loading) return <div className="text-center py-10">Loading...</div>;
 
   return (
+    <div>
+       <Navbar />
     <div className="container mx-auto p-12 mt-20">
-      <Navbar />
       <h1 className="text-xl font-bold mb-4">Outgoing Requests</h1>
       <ul className="grid grid-cols-2 gap-4">
         {requests.map(request => (
@@ -52,6 +53,7 @@ const OutgoingRequestsPage = () => {
           </li>
         ))}
       </ul>
+    </div>
     </div>
   );
 };

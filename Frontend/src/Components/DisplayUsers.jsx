@@ -15,6 +15,7 @@ function DisplayUser() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const loggedInUsername = getCookie("username");
   const navigate = useNavigate();
+  const token = getCookie("access_token");
 
   const fetchUsers = async () => {
     try {
@@ -51,7 +52,10 @@ function DisplayUser() {
       };
       const response = await axios.post(
         `${BACKEND_SERVER}/requests`,
-        requestData
+        requestData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       if (response.status === 200) {
         alert("Request sent successfully!");
@@ -69,7 +73,6 @@ function DisplayUser() {
 
   const handleLike = async (username) => {
     try {
-      const token = getCookie("access_token");
       await axios.post(
         `${BACKEND_SERVER}/users/${username}/toggle-like`,
         { from: loggedInUsername, to: username },
