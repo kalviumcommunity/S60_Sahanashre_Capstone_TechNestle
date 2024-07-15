@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { BACKEND_SERVER } from "../Utils/constants";
+import { BACKEND_SERVER, firebaseConfig } from "../Utils/constants";
 import image from "../assets/t1.png"; 
+import { initializeApp } from 'firebase/app';
+import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
+
+initializeApp(firebaseConfig);
 
 function Login() {
   const [login, setLogin] = useState({
@@ -43,6 +47,34 @@ function Login() {
           error: "User details don't match, unable to login.",
         });
       });
+  };
+
+  const handleGoogleSignIn = async () => {
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+
+    try {
+      const res = await signInWithPopup(auth, provider);
+      const googleIdToken = await res.user.accessToken;
+      const googleUserInfo = {
+        email: res.user.email,
+        googleIdToken: googleIdToken,
+      };
+      console.log(googleUserInfo)
+
+      const loginResponse = await axios.post(`${BACKEND_SERVER}/login`, googleUserInfo);
+
+      if (loginResponse.status === 201) {
+        document.cookie = `username=${loginResponse.data.username}`;
+        document.cookie = `access_token=${loginResponse.data.token}`;
+        navigate("/user");
+      } else {
+        setLogin({ ...login, error: "An unexpected error occurred. Please try again." });
+      }
+    } catch (err) {
+      console.error("Google sign-in error:", err);
+      setLogin({ ...login, error: "Google sign-in failed. Please try again." });
+    }
   };
 
   return (
@@ -91,14 +123,23 @@ function Login() {
                 Login
               </button>
             </div>
-            <p className="text-center text-gray-600 mt-4">
-              Don't have an account?{" "}
-              <Link to="/register" className="text-blue-500 hover:underline ml-1">
-                Sign Up
-              </Link>
-            </p>
           </form>
+          <div className="mt-7 flex flex-col items-center">
+            <button
+              onClick={handleGoogleSignIn}
+              className="inline-flex h-10 w-4/9 items-center justify-center gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="h-[18px] w-[18px]" />
+              Continue with Google
+            </button>
+          </div>
           {login.error && <p className="text-red-500 mt-2">{login.error}</p>}
+          <p className="text-center text-gray-600 mt-4">
+            Don't have an account?{" "}
+            <Link to="/register" className="text-blue-500 hover:underline ml-1">
+              Sign Up
+            </Link>
+          </p>
         </div>
       </div>
     </div>
