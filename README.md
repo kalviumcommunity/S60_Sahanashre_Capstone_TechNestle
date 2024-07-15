@@ -2,7 +2,7 @@
 
 Welcome to TechNestle, your go-to platform for mastering web development skills! Whether you're a seasoned developer or a beginner eager to dive into the world of web development, TechNestle has got you covered.
 
-![Web development image](https://timesproweb-static-backend-prod.s3.ap-south-1.amazonaws.com/Web_Development_Banner_Image_0e476d1ab6.webp)
+![Web development image](https://api.reliasoftware.com/uploads/web_development_is_important_176fa0618e.jpg)
 
 ## Features:
 🔐 User Authentication: Sign up and log in securely to access all the features of TechNestle.

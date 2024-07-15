@@ -1,8 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { BACKEND_SERVER } from "../Utils/constants";
+import { BACKEND_SERVER, firebaseConfig } from "../Utils/constants";
 import image from "../assets/t1.png"; 
+import { initializeApp } from 'firebase/app';
+import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 
 function Signup() {
   const [user, setUser] = useState({
@@ -55,7 +57,7 @@ function Signup() {
           error: "",
         });
         document.cookie = `username=${user.username}`;
-        document.cookie = `access_token=${res.data}`;
+        document.cookie = `access_token=${res.data.token}`;
         navigate("/createuser");
       } else {
         setUser({
@@ -76,15 +78,47 @@ function Signup() {
     }
   };
 
+  initializeApp(firebaseConfig);
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+
+  const googleSignIn = () => {
+    signInWithPopup(auth, provider)
+      .then((res) => {
+        console.log(res.user);
+        const googleIdToken = res.user.accessToken;
+        return axios.post(`${BACKEND_SERVER}/register`, {
+          username: res.user.displayName,
+          email: res.user.email,
+          googleIdToken: googleIdToken,
+        });
+      })
+      .then((res) => {
+        if (res.status === 201) {
+          document.cookie = `username=${res.data.username}`;
+          document.cookie = `access_token=${res.data.token}`;
+          navigate("/createuser");
+        } else {
+          setUser({
+            ...user,
+            error: "An unexpected error occurred. Please try again.",
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Google sign-in error:", err);
+        setUser({
+          ...user,
+          error: "Google sign-in failed. Please try again.",
+        });
+      });
+  };
+
   return (
     <div className="flex items-center justify-center h-screen bg-white p-6">
       <div className="flex bg-blue-100 rounded-lg shadow-lg overflow-hidden w-3/4 md:w-2/3 lg:w-1/2 h-5/6 p-8 gap-6">
         <div className="hidden md:block md:w-1/2">
-          <img
-            src={image}
-            alt="Signup illustration"
-            className="h-full w-full object-cover rounded-lg"
-          />
+          <img src={image} alt="Signup illustration" className="h-full w-full object-cover rounded-lg" />
         </div>
         <div className="w-full md:w-1/2 p-8 flex flex-col justify-center items-center">
           <h2 className="text-center text-2xl font-bold text-black mb-6">Signup Form</h2>
@@ -131,6 +165,15 @@ function Signup() {
               </button>
             </div>
           </form>
+          <div className="mt-7 flex flex-col items-center">
+            <button
+              onClick={googleSignIn}
+              className="inline-flex h-10 w-4/9 items-center justify-center gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="h-[18px] w-[18px]" />
+              Continue with Google
+            </button>
+          </div>
           {user.error && <p className="text-red-500 mt-2">{user.error}</p>}
         </div>
       </div>
