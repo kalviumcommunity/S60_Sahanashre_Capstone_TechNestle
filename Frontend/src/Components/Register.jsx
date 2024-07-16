@@ -85,7 +85,6 @@ function Signup() {
   const googleSignIn = () => {
     signInWithPopup(auth, provider)
       .then((res) => {
-        console.log(res.user);
         const googleIdToken = res.user.accessToken;
         return axios.post(`${BACKEND_SERVER}/register`, {
           username: res.user.displayName,
@@ -96,7 +95,7 @@ function Signup() {
       .then((res) => {
         if (res.status === 201) {
           document.cookie = `username=${res.data.username}`;
-          document.cookie = `access_token=${res.data.token}`;
+          document.cookie = `access_token=${res.data.accessToken}`;
           navigate("/createuser");
         } else {
           setUser({
@@ -106,7 +105,6 @@ function Signup() {
         }
       })
       .catch((err) => {
-        console.error("Google sign-in error:", err);
         setUser({
           ...user,
           error: "Google sign-in failed. Please try again.",

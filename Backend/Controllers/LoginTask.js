@@ -33,6 +33,7 @@ const login = async (req, res) => {
             const passwordMatch = await bcrypt.compare(password, user.password);
             if (passwordMatch) {
                 const token = jwt.sign({ username: name }, process.env.SECRET_KEY, { expiresIn: '1h' });
+                console.log({...user})
                 return res.status(201).json({ token, ...user, photo: photo?.profilePhoto ?? "", message: "Login successful" });
             } else {
                 return res.status(400).json({ message: "Details given by the user did not match" });
@@ -56,7 +57,6 @@ const login = async (req, res) => {
         return res.status(400).json({ message: "Password or Google ID token must be provided" });
 
     } catch (error) {
-        console.log(error,error.message,"sahana");
         return res.status(500).json({ message: "Internal server error", error: error.message });
     }
 };

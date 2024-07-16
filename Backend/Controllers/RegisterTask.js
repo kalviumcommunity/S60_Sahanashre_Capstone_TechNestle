@@ -62,7 +62,7 @@ const register = async (req, res) => {
     const savedRegister = await newRegister.save();
     const accessToken = jwt.sign({ username: username }, process.env.SECRET_KEY, { expiresIn: '1h' });
 
-    return res.status(201).json({ accessToken });
+    return res.status(201).json({accessToken:accessToken, username:username});
   } catch (error) {
     return res.status(500).json({ error: "Error in registering account" });
   }
