@@ -13,10 +13,6 @@ app.use("/api",Router)
 const PORT = process.env.PORT || 8080
 const MONGO_URI = process.env.MONGODB_CONNECTION
 
-// app.get("/",(req,res)=>{
-//     res.send("This is TechNestle")
-// })
-
 mongoose.connect(MONGO_URI)
 .then(()=>{
     console.log("Database connected successfully")

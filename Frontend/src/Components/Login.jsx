@@ -39,9 +39,11 @@ function Login() {
           document.cookie = `access_token=${response.data["token"]}`;
           navigate("/user");
         }
+        else if(response.status === 400){
+          setLogin({...login,error:response.data.message})
+        }
       })
       .catch((error) => {
-        console.log("Error in login", error);
         setLogin({
           ...login,
           error: "User details don't match, unable to login.",
@@ -60,19 +62,22 @@ function Login() {
         email: res.user.email,
         googleIdToken: googleIdToken,
       };
-      console.log(googleUserInfo)
 
       const loginResponse = await axios.post(`${BACKEND_SERVER}/login`, googleUserInfo);
 
       if (loginResponse.status === 201) {
-        document.cookie = `username=${loginResponse.data.username}`;
+        document.cookie = `username=${loginResponse.data.username._doc.username}`;
+        document.cookie = `photo=${loginResponse.data.photo}`;
         document.cookie = `access_token=${loginResponse.data.token}`;
         navigate("/user");
-      } else {
+      } 
+      else if(loginResponse.status === 400){
+        setLogin({...login, error:loginResponse.data.message})
+      }
+      else {
         setLogin({ ...login, error: "An unexpected error occurred. Please try again." });
       }
     } catch (err) {
-      console.error("Google sign-in error:", err);
       setLogin({ ...login, error: "Google sign-in failed. Please try again." });
     }
   };
