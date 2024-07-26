@@ -15,6 +15,7 @@ const IncomingRequest = require("../Controllers/IncomingRequest.js");
 const OutgoingRequest = require("../Controllers/OutgoingRequest.js");
 const UpdateRequestStatus = require("../Controllers/UpdateRequestStatus.js");
 const ToogleLikeStatus = require("../Controllers/Likes.js");
+const {comment,findComment} = require("../Controllers/Comment.js")
 
 const AuthenticateToken = (req, res, next) => {
     const authHeader = req.headers["authorization"];
@@ -48,6 +49,8 @@ Router.get("/users/:profilename/outgoing-requests", AuthenticateToken, OutgoingR
 Router.put("/users/:profilename", AuthenticateToken, updateUser);
 Router.post("/users/:profilename/toggle-like", AuthenticateToken, ToogleLikeStatus);
 Router.delete("/users/:id", deleteUser);
+Router.post("/users/comment",AuthenticateToken,comment);
+Router.get("/users/:username/comment",AuthenticateToken,findComment);
 Router.post("/requests", AuthenticateToken, createRequest);
 Router.put("/requests/:id", AuthenticateToken, UpdateRequestStatus);
 

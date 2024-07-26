@@ -9,7 +9,7 @@ function Footer() {
       <div className="flex flex-col items-center">
         <h5 className="font-semibold">Follow Us</h5>
         <div className="flex gap-4">
-          <a href="https://www.linkedin.com/in/sahanashre-v-b13775297" target="_blank" className="hover:text-blue-500">
+          <a href="https://www.linkedin.com/in/sahanashre-v" target="_blank" className="hover:text-blue-500">
             <FaLinkedin size={24} />
           </a>
           <a href="https://github.com/Sahanashre-V" target="_blank" className="hover:text-gray-300">
