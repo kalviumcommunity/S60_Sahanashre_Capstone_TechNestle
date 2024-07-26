@@ -6,6 +6,7 @@ import ConfirmationModal from "./ConfirmationModal";
 import getCookie from "../Utils/GetCookie";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_SERVER } from "../Utils/constants";
+import Feedback from "./Comments";
 
 function DisplayUser() {
   const [users, setUsers] = useState([]);
@@ -224,6 +225,7 @@ function DisplayUser() {
                     </button>
                   </div>
                 </div>
+                <Feedback username={user.username} />
               </div>
             ))}
           </div>

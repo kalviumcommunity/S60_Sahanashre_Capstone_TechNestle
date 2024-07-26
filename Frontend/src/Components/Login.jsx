@@ -66,7 +66,7 @@ function Login() {
       const loginResponse = await axios.post(`${BACKEND_SERVER}/login`, googleUserInfo);
 
       if (loginResponse.status === 201) {
-        document.cookie = `username=${loginResponse.data.username._doc.username}`;
+        document.cookie = `username=${loginResponse.data._doc.username}`;
         document.cookie = `photo=${loginResponse.data.photo}`;
         document.cookie = `access_token=${loginResponse.data.token}`;
         navigate("/user");
