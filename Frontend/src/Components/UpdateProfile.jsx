@@ -125,109 +125,117 @@ function UpdateProfile() {
 
   return (
     <div className="flex items-center justify-center h-screen p-6">
-      <div className="flex flex-col bg-white rounded-lg shadow-lg overflow-hidden bg-blue-100 w-full max-w-md p-8 gap-6">
-        {photoUrl && (
-          <img
-            src={photoUrl}
-            alt="Profile"
-            className="w-24 h-24 rounded-full mx-auto mb-4"
-          />
-        )}
-        <form onSubmit={handleSubmit} className="space-y-6 w-full text-center">
-          <div className="w-full">
-            <label
-              htmlFor="age"
-              className="block text-gray-700 text-sm font-bold mb-1"
-            >
-              Years of Experience
-            </label>
-            <input
-              type="number"
-              id="age"
-              placeholder="Years of Experience"
-              value={user.age}
-              className="appearance-none block w-4/6 mx-auto px-4 py-2 border border-blue-900 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm"
-              onChange={handleChange}
-              required
+      <div className="relative w-full max-w-md">
+        <button
+          className="absolute top-0 right-0 mt-4 mr-4 bg-red-500 text-white p-2 font-bold rounded-xl pr-2.5 pl-2.5"
+          onClick={() => navigate("/user")}
+        >
+          X
+        </button>
+        <div className="flex flex-col rounded-lg shadow-lg overflow-hidden bg-blue-100 p-8 gap-6">
+          {photoUrl && (
+            <img
+              src={photoUrl}
+              alt="Profile"
+              className="w-24 h-24 rounded-full mx-auto mb-4"
             />
-          </div>
-          <div className="w-full">
-            <label
-              htmlFor="skills"
-              className="block text-gray-700 text-sm font-bold mb-1"
-            >
-              Skills
-            </label>
-            <input
-              type="text"
-              id="skills"
-              placeholder="Skills"
-              value={user.skills}
-              className="appearance-none block w-4/6 mx-auto px-4 py-2 border border-blue-900 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm"
-              onChange={handleChange}
-            />
-            <p className="text-gray-500 text-xs">
-              Separate each skill with a comma
-            </p>
-          </div>
-          <div className="w-full">
-            <label
-              htmlFor="linkedin"
-              className="block text-gray-700 text-sm font-bold mb-1"
-            >
-              LinkedIn Link
-            </label>
-            <input
-              type="text"
-              id="linkedin"
-              placeholder="LinkedIn Link"
-              value={user.linkedin}
-              className="appearance-none block w-4/6 mx-auto px-4 py-2 border border-blue-900 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="w-full">
-            <label
-              htmlFor="github"
-              className="block text-gray-700 text-sm font-bold mb-1"
-            >
-              Github Link
-            </label>
-            <input
-              type="text"
-              id="github"
-              placeholder="Github Link"
-              value={user.github}
-              className="appearance-none block w-4/6 mx-auto px-4 py-2 border border-blue-900 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="w-full">
-            <label
-              htmlFor="profilePhoto"
-              className="block text-gray-700 text-sm font-bold mb-1"
-            >
-              Profile Photo
-            </label>
-            <input
-              type="file"
-              id="profilePhoto"
-              className="hidden"
-              onChange={handlePhotoChange}
-            />
-            <label
-              htmlFor="profilePhoto"
-              className="bg-green-700 text-white text-xs font-bold py-2 px-4 rounded cursor-pointer"
-            >
-              Choose a file
-            </label>
-          </div>
-          <div className="w-full flex justify-center">
-            <button className="w-2/6 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-900 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400">
-              Update Profile
-            </button>
-          </div>
-        </form>
+          )}
+          <form onSubmit={handleSubmit} className="space-y-6 w-full text-center">
+            <div className="w-full">
+              <label
+                htmlFor="age"
+                className="block text-gray-700 text-sm font-bold mb-1"
+              >
+                Years of Experience
+              </label>
+              <input
+                type="number"
+                id="age"
+                placeholder="Years of Experience"
+                value={user.age}
+                className="appearance-none block w-4/6 mx-auto px-4 py-2 border border-blue-900 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="w-full">
+              <label
+                htmlFor="skills"
+                className="block text-gray-700 text-sm font-bold mb-1"
+              >
+                Skills
+              </label>
+              <input
+                type="text"
+                id="skills"
+                placeholder="Skills"
+                value={user.skills}
+                className="appearance-none block w-4/6 mx-auto px-4 py-2 border border-blue-900 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm"
+                onChange={handleChange}
+              />
+              <p className="text-gray-500 text-xs">
+                Separate each skill with a comma
+              </p>
+            </div>
+            <div className="w-full">
+              <label
+                htmlFor="linkedin"
+                className="block text-gray-700 text-sm font-bold mb-1"
+              >
+                LinkedIn Link
+              </label>
+              <input
+                type="text"
+                id="linkedin"
+                placeholder="LinkedIn Link"
+                value={user.linkedin}
+                className="appearance-none block w-4/6 mx-auto px-4 py-2 border border-blue-900 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="w-full">
+              <label
+                htmlFor="github"
+                className="block text-gray-700 text-sm font-bold mb-1"
+              >
+                Github Link
+              </label>
+              <input
+                type="text"
+                id="github"
+                placeholder="Github Link"
+                value={user.github}
+                className="appearance-none block w-4/6 mx-auto px-4 py-2 border border-blue-900 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-400 focus:border-blue-400 sm:text-sm"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="w-full">
+              <label
+                htmlFor="profilePhoto"
+                className="block text-gray-700 text-sm font-bold mb-1"
+              >
+                Profile Photo
+              </label>
+              <input
+                type="file"
+                id="profilePhoto"
+                className="hidden"
+                onChange={handlePhotoChange}
+              />
+              <label
+                htmlFor="profilePhoto"
+                className="bg-green-700 text-white text-xs font-bold py-2 px-4 rounded cursor-pointer"
+              >
+                Choose a file
+              </label>
+            </div>
+            <div className="w-full flex justify-center">
+              <button className="w-2/6 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-900">
+                Update Profile
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

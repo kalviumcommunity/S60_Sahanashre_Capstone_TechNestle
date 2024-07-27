@@ -57,7 +57,7 @@ function Signup() {
           error: "",
         });
         document.cookie = `username=${user.username}`;
-        document.cookie = `access_token=${res.data.token}`;
+        document.cookie = `access_token=${res.data.accessToken}`;
         navigate("/createuser");
       } else {
         setUser({

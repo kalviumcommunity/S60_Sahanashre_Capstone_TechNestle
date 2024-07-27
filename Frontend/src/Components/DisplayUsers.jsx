@@ -7,6 +7,7 @@ import getCookie from "../Utils/GetCookie";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_SERVER } from "../Utils/constants";
 import Feedback from "./Comments";
+import Footer from "./Footer";
 
 function DisplayUser() {
   const [users, setUsers] = useState([]);
@@ -93,15 +94,14 @@ function DisplayUser() {
   return (
     <div>
       <Navbar />
-      <div className="p-7">
-        <div className="container m-auto pl-7 pr-7 p-1 pt-5 mt-28 mb-10 bg-blue-100 rounded-xl">
+      <div className="pt-24 p-7 mt-6">
+        <div className="container m-auto pl-7 pr-7 p-1 pt-5 mb-10 bg-blue-100 rounded-xl">
           <h2 className="text-2xl font-bold mb-4">Top Developers</h2>
           <div className="grid grid-cols-3 gap-6 mb-12">
             {topDevelopers.map((user, id) => (
               <div
-                key={id}
-                className="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center"
-              >
+                 key={id}
+                 className="bg-white p-6 rounded-lg border-2 shadow-xl flex flex-col items-center transform hover:-translate-y-2 transition-transform hover:border-black">
                 <img
                   className="w-36 h-36 rounded-full object-cover"
                   src={user.profilePhoto}
@@ -157,6 +157,9 @@ function DisplayUser() {
                     </button>
                   </div>
                 </div>
+                <div className="flex items-center">
+                  <Feedback username={user.username} />
+                </div>
               </div>
             ))}
           </div>
@@ -167,9 +170,8 @@ function DisplayUser() {
           <div className="grid grid-cols-3 gap-6">
             {users.map((user, id) => (
               <div
-                key={id}
-                className="bg-white p-6 rounded-lg shadow-xl flex flex-col items-center"
-              >
+              key={id}
+              className="bg-white p-6 rounded-lg border-2 shadow-xl flex flex-col items-center transform hover:-translate-y-2 transition-transform hover:border-black">
                 <img
                   className="w-36 h-36 rounded-full object-cover"
                   src={user.profilePhoto}
@@ -206,7 +208,7 @@ function DisplayUser() {
                 </div>
                 <div className="flex justify-center items-center mt-4 w-full space-x-4">
                   <button
-                    className="px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-800"
+                    className="px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-900"
                     onClick={() => handleRequest(user)}
                   >
                     Request
@@ -225,7 +227,9 @@ function DisplayUser() {
                     </button>
                   </div>
                 </div>
-                <Feedback username={user.username} />
+                <div className="flex items-center">
+                  <Feedback username={user.username} />
+                </div>
               </div>
             ))}
           </div>
@@ -241,6 +245,7 @@ function DisplayUser() {
           />
         )}
       </div>
+      <Footer/>
     </div>
   );
 }

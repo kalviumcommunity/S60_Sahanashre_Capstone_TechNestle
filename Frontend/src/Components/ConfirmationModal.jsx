@@ -21,7 +21,6 @@ const ConfirmationModal = ({ isOpen, onRequestClose, user, getCookie, onSubmit }
   };
 
   const handleSubmit = () => {
-    console.log(emailData)
     onSubmit(emailData);
     onRequestClose();
   };
@@ -33,7 +32,7 @@ const ConfirmationModal = ({ isOpen, onRequestClose, user, getCookie, onSubmit }
       className="flex items-center justify-center"
       overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
     >
-      <div className="bg-white rounded-lg p-6 w-96 max-h-full overflow-y-auto">
+      <div className="bg-white rounded-lg p-6 w-[75vh] max-h-full overflow-y-auto">
         <h2 className="text-lg font-bold mb-4" style={{ fontSize: '20px' }}>Learning Request</h2>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700" style={{ fontSize: '18px' }}>Subject:</label>
@@ -43,7 +42,7 @@ const ConfirmationModal = ({ isOpen, onRequestClose, user, getCookie, onSubmit }
             value={emailData.subject}
             onChange={handleChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            style={{ fontSize: '18px' }}
+            style={{ fontSize: '17px' }}
           />
         </div>
         <div className="mb-4">
@@ -54,12 +53,12 @@ const ConfirmationModal = ({ isOpen, onRequestClose, user, getCookie, onSubmit }
             onChange={handleChange}
             rows="8"
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm resize-none"
-            style={{ fontSize: '18px' }}
+            style={{ fontSize: '17px' }}
           />
         </div>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700" style={{ fontSize: '18px' }}>Skills:</label>
-          <p className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 sm:text-sm" style={{ fontSize: '18px' }}>
+          <p className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 sm:text-sm" style={{ fontSize: '17px' }}>
             {user.skills.join(', ')}
           </p>
         </div>
