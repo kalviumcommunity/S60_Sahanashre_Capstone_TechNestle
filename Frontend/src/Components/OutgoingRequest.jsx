@@ -57,7 +57,7 @@ const OutgoingRequestsPage = () => {
         <h1 className="text-xl font-bold mb-4">Outgoing Requests</h1>
         <ul className="grid grid-cols-2 gap-4">
           {requests.map(request => (
-            <li key={request._id} className="bg-white p-6 rounded-lg shadow-lg">
+            <li key={request._id} className="border-2 border-white bg-white p-6 rounded-lg shadow-lg transform hover:-translate-y-2 transition-transform hover:border-blue-800">
               <p className="text-lg font-medium">To: {request.to}</p>
               <p className="text-base text-gray-700">Request Details: {request.mailBody}</p>
               <p className="text-base text-gray-700 flex items-center">

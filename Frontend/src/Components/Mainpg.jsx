@@ -61,9 +61,7 @@ function Mainpg() {
 
         </div>
       </main>
-      <Footer>
-        <p className="hover:text-green-700">Footer content here</p>
-      </Footer>
+      <Footer/>
     </div>
   );
 }

@@ -15,6 +15,7 @@ function Navbar() {
   };
 
   return (
+    <div className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
     <nav className="flex justify-between items-center p-4 shadow-md bg-gray-100 fixed w-full top-0">
       <div className="flex items-center space-x-4">
         <img src={techlogo} alt="TechLogo" className="h-8" />
@@ -37,6 +38,7 @@ function Navbar() {
         <p onClick={logout} className="text-gray-800 cursor-pointer hover:text-blue-500 text-lg">Logout</p>
       </div>
     </nav>
+    </div>
   );
 }
 
