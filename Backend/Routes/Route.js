@@ -8,7 +8,7 @@ const createUser = require("../Controllers/Profile.js");
 const login = require("../Controllers/LoginTask.js");
 const displayUsers = require("../Controllers/DisplayUsers.js"); 
 const updateUser = require("../Controllers/UpdateProfile.js");
-const deleteUser = require("../Controllers/DeleteProfile.js");
+const deleteComment = require("../Controllers/DeleteComment.js");
 const createRequest = require("../Controllers/Request.js");
 const displayUser = require("../Controllers/DisplayUser.js");
 const IncomingRequest = require("../Controllers/IncomingRequest.js");
@@ -48,7 +48,7 @@ Router.get("/users/:profilename/incoming-requests", AuthenticateToken, IncomingR
 Router.get("/users/:profilename/outgoing-requests", AuthenticateToken, OutgoingRequest);
 Router.put("/users/:profilename", AuthenticateToken, updateUser);
 Router.post("/users/:profilename/toggle-like", AuthenticateToken, ToogleLikeStatus);
-Router.delete("/users/:id", deleteUser);
+Router.delete("/users/:id",AuthenticateToken, deleteComment);
 Router.post("/users/comment",AuthenticateToken,comment);
 Router.get("/users/:username/comment",AuthenticateToken,findComment);
 Router.post("/requests", AuthenticateToken, createRequest);

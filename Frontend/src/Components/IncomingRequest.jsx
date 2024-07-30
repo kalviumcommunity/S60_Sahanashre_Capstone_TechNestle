@@ -73,6 +73,11 @@ const IncomingRequestsPage = () => {
       <Navbar />
       <div className="container mx-auto p-12 mt-20">
         <h1 className="text-xl font-bold mb-4">Incoming Requests</h1>
+        {requests.length === 0 ? (
+          <div className="flex text-lg justify-center items-center">
+          <p>No incoming requests found...</p>
+          </div>
+        ) : (
         <ul className="grid grid-cols-2 gap-4">
           {requests.map(request => (
             <li key={request._id} className="border-2 border-white bg-white p-6 rounded-lg shadow-lg transform hover:-translate-y-2 transition-transform hover:border-blue-800">
@@ -103,6 +108,7 @@ const IncomingRequestsPage = () => {
             </li>
           ))}
         </ul>
+        )}
       </div>
     </div>
   );
