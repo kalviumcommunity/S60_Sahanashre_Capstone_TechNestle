@@ -22,6 +22,7 @@ function Navbar() {
         <NavLink to="/" className="text-gray-800 font-bold text-xl hover:text-blue-600">Tech Nestle</NavLink>
       </div>
       <div className="flex space-x-6">
+        <NavLink to="/user" className="text-gray-800 hover:text-blue-600 text-lg">Home</NavLink>
         <NavLink to="/about" className="text-gray-800 hover:text-blue-600 text-lg">About</NavLink>
         <NavLink to="/incoming" className="text-gray-800 hover:text-blue-600 text-lg">Awaiting Approval</NavLink>
         <NavLink to="/outgoing" className="text-gray-800 hover:text-blue-600 text-lg">Awaiting Response</NavLink>

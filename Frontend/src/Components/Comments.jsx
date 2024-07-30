@@ -3,6 +3,7 @@ import axios from 'axios';
 import getCookie from "../Utils/GetCookie";
 import { BACKEND_SERVER } from "../Utils/constants";
 import CommentModal from './ModalComment'; 
+import { FaTrashAlt } from 'react-icons/fa'; 
 
 const Feedback = ({ username }) => {
   const [comments, setComments] = useState([]);
@@ -40,6 +41,17 @@ const Feedback = ({ username }) => {
     }
   };
 
+  const handleDelete = async (commentId) => {
+    try {
+      await axios.delete(`${BACKEND_SERVER}/users/${commentId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setComments(comments.filter(comment => comment._id !== commentId));
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
+  };
+
   return (
     <div className="mt-4 w-full">
       <button
@@ -48,13 +60,19 @@ const Feedback = ({ username }) => {
       >
         Comments
       </button>
-
       <CommentModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ul className="mb-4">
           {comments.map((comment, index) => (
             <li key={index} className="bg-gray-100 p-2 rounded-lg mb-2">
               <span className="font-serif font-semibold text-sm">{comment.commenter}</span>
+              <div className="flex items-center">
               <p className="ml-2 text-base">{comment.comment}</p>
+              {loggedInUsername === comment.commenter && (
+                <button onClick={() => handleDelete(comment._id)} className="ml-auto text-red-600">
+                  <FaTrashAlt />
+                </button>
+              )}
+              </div>
             </li>
           ))}
         </ul>
