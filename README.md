@@ -11,7 +11,11 @@ Welcome to TechNestle, your go-to platform for mastering web development skills!
 
 📧 Communication: Reach out to other developers easily by sending emails directly from the platform.
 
-⭐ Ratings and Reviews: Provide feedback on your learning experience by rating and reviewing the teaching sessions.
+💬 Feedback: Comments section for feedback and collaborative learning.
+
+🔑 Firebase: Effortless login using Firebase ensures a smooth user experience with quick and secure access to the platform.
+
+🌟 Top 3 developers listed based on likes, along with fellow developers.
 
 # 🌐 Explore Topics
 
