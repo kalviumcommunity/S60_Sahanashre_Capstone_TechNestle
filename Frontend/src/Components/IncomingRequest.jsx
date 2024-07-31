@@ -85,7 +85,7 @@ const IncomingRequestsPage = () => {
               <p className="text-base text-gray-700">Request Details: {request.mailBody}</p>
               <p className="text-base text-gray-700 flex items-center">
                 Status: 
-                <span className={`inline-block px-3 py-1 rounded-full text-base ml-2 mt-2 mb-2 ${request.status === 'approved' ? 'bg-green-800 text-white' : request.status === 'rejected' ? 'bg-red-500 text-white' : request.status === 'pending' ? 'bg-red-500 text-white' : ''} font-semibold`}>
+                <span className={`inline-block px-3 py-1 rounded-full text-base ml-2 mt-2 mb-2 ${request.status === 'approved' ? 'bg-green-800 text-white' : request.status === 'rejected' ? 'bg-red-500 text-white' : request.status === 'pending' ? 'bg-yellow-500 text-white' : ''} font-semibold`}>
                   {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
                 </span>
               </p>
